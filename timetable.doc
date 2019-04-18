@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
+<title>Word Report</title>
+<style>
+<!--
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+    {
+    font-size:12.0pt;
+    font-family:"Times New Roman";}
+@page Section1
+    {size:595.3pt 841.9pt;
+    margin: 28.8pt 42pt 19.6pt 20pt;}
+div.Section1
+    {page:Section1;}
+  
+  .temprow
+  {
+    border:1px solid #ff00000;
+    height:220px;
+  }
+ 
+    .glyphicon-minus{
+        color: red!important;
+    }
+    .right span:hover{
+        cursor: pointer;
+        /*background-color: #eee; */
+    }
+
+    table .glyphicon-plus{
+        cursor: pointer;
+        display: block!important;
+        padding-bottom: 4px;
+    }
+    table td div span:hover{
+        cursor: pointer;
+        /*background-color: #2382D5; */
+    }
+
+    table td div .glyphicon-remove{
+        padding-left: 4px!important;
+    }
+
+    .drop{
+        padding: 0!important;
+    }
+    .w50{
+        width: 50%!important;display: inline-block;
+    }
+    .w33{
+        width: 33.3333333333%!important;display: inline-block;
+    }
+
+    .w25{
+        width: 25%!important;display: inline-block;
+    }
+    .w100{
+        width: 100%!important;
+    }
+    .session-data{
+        border:1px solid #ddd;padding: 9px;;
+    }
+    .session-mix-time{
+        font-size: 10px;
+        width: auto;
+        border-bottom: 1px solid #ddd;
+        padding-left: 27px;
+        padding-bottom: 2px;
+    }
+    .popover.clockpicker-popover{
+        z-index: 9999;
+    }
+table#timetable_table{
+        border: 1px solid #ddd;
+}
+
+-->
+</style>
+</head>
+<body>
+  <div class="Section1">
+    <div class="MsoNormal">
+        <div class="right">
+            <table id="timetable_table" class="table table-bordered table-responsive">
+                <tr>
+                    <td style="text-align: center;">
+                        <span>Time</span>/<span>Session</span>
+                    </td>
+
+                </tr>
+                
+                <tr><td style='text-align: center;'><div>Thursday</div><div>15-06-2017</div></td><td style='text-align: center;'><div class='session-mix-time'>11:00 - 12:30</div><div>Human Resource Management</div><div>-<small><strong>Aditya</strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>13:00 - 02:00</div><div>Project Management</div><div>-<small><strong>Ganesh</strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>15:00 - 16:30</div><div>Project Work</div><div>-<small><strong>Aditya</strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>17:00 - 18:30</div><div>Stress Management</div><div>-<small><strong>Ganesh</strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>18:00 - 20:00</div><div>GFR</div><div>-<small><strong>Aditya</strong></small></div> </td></tr><tr><td style='text-align: center;'><div>Friday</div><div>16-06-2017</div></td><td style='text-align: center;'><div class='session-mix-time'>11:00 - 12:30</div><div>Project Work</div><div>-<small><strong>Aditya</strong></small></div> </td></tr>
+        
+        </div>
+
+
+   </div>
+   </div>
+</body>
+</html>

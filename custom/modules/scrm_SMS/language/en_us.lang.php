@@ -1,0 +1,6 @@
+<?php
+// created: 2017-09-28 18:26:20
+$mod_strings = array (
+  'LBL_SCRM_SMS_SCRM_PARTNER_CONTACTS_FROM_SCRM_PARTNER_CONTACTS_TITLE' => 'Contact',
+  'LBL_SCRM_SMS_SCRM_PARTNERS_FROM_SCRM_PARTNERS_TITLE' => 'Partners',
+);

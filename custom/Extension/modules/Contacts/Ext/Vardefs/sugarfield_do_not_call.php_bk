@@ -1,0 +1,11 @@
+<?php
+	 // created: 2017-7-21
+	$dictionary['Contact']['fields']['do_not_call']['massupdate']=false;
+	$dictionary['Contact']['fields']['portal_account_disabled']['massupdate']=false;
+	$dictionary['Contact']['fields']['Sync']['massupdate']=false;
+	$dictionary['Contact']['fields']['portal_user_type']['massupdate']=false;
+	$dictionary['Contact']['fields']['optout_primary']['massupdate']=false;
+	$dictionary['Contact']['fields']['lead_source']['massupdate']=false;
+	$dictionary['Contact']['fields']['opportunity_role']['massupdate']=false;
+	$dictionary['Contact']['fields']['assigned_user_name']['massupdate']=false;
+?>

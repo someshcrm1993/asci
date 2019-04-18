@@ -1,0 +1,476 @@
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
+
+/* Custom Code */
+
+
+div#loginform {
+    /*-moz-box-shadow: 0 0 5px 5px #dddddd;
+    -webkit-box-shadow: 0 0 5px 5px#dddddd; 
+    -webkit-border-radius: 5px; 
+    -moz-border-radius: 5px;
+    border-radius: 5px; */
+    box-shadow: none;
+	float: left;
+    width: 276px;
+    background: transparent;
+    position: absolute;
+    bottom: -12px;
+    left: 26px;
+    color: #fff;
+    font-size: 13px;
+    padding: 64px 25px 25px 25px;
+    /*border: 5px solid #ea2c32;*/
+    margin: 0px -12px 1px -10px;
+}
+#bigbutton {
+    border-radius: 5px;
+    padding: 8px 0 10px 0;
+    background-color: #0db289 !important;
+    margin: 10px 0px 0 38px;
+    width: 62%;
+}
+input#bigbutton:hover {
+    background-color: #039b75 !important;
+}
+input#user_name, input#user_password {
+    width: 220px !important;
+    border-radius: 5px;
+    padding-top: 9px;
+    height: 37px;
+}    
+input#user_name {
+    margin: 14px 0 12px 0;
+}
+span.input-group-addon.logininput.glyphicon.glyphicon-user, span.input-group-addon.logininput.glyphicon.glyphicon-lock {
+    display: none;
+}
+@media (max-width: 240px) {
+	div#loginform {
+		left: 8px;
+		padding: 64px 58px 25px 25px !important;
+		width: 185px !important;
+	}
+	input#user_name, input#user_password {
+		width: 105px !important;
+    }
+    #bigbutton {
+		margin: 10px 0px 0 24px;
+		width: 58% !important;
+    }
+    #forgotpasslink {
+		margin: 10px 0 0 -16px !important;
+	}
+}
+@media (min-width:241px) and (max-width: 320px){
+	#bigbutton {
+		margin: 10px 0px 0 30px;
+		width: 55% !important;
+    }
+    #forgotpasslink {
+		margin: 10px 0 0 -4px !important;
+	}
+	input#user_name, input#user_password {
+		width: 145px !important;
+    }
+	div#loginform {
+		left: 18px;
+		padding: 64px 76px 25px 25px !important;
+		width: 246px !important;
+	}
+}
+@media (min-width:321px) and (max-width: 375px){
+	div#loginform {
+		left: 38px;
+	}
+}
+@media (min-width:376px) and (max-width: 384px){
+	div#loginform {
+		left: 44px;
+	}
+}
+@media (min-width:385px) and (max-width: 414px){
+	div#loginform {
+		left: 60px;
+	}
+}
+@media (min-width:415px) and (max-width: 429px){
+	div#loginform {
+		left: 60px;
+	}
+}
+@media (min-width:430px) and (max-width: 445px){
+	div#loginform {
+		left: 72px;
+	}
+}
+@media (min-width:446px) and (max-width: 458px){
+	div#loginform {
+		left: 72px;
+	}
+}
+@media (min-width:459px) and (max-width: 470px){
+	div#loginform {
+		left: 72px;
+	}
+}
+@media (min-width:471px) and (max-width: 480px){
+	div#loginform {
+		left: 90px;
+	}
+}
+@media (min-width:321px) and (max-width: 480px){
+	#bigbutton {
+		margin: 10px 0px 0 30px;
+		width: 68% !important;
+    }
+    #forgotpasslink {
+		margin: 10px 0 0 -4px !important;
+	}
+	input#user_name, input#user_password {
+		width: 190px !important;
+    }
+    div#loginform {
+		padding: 64px 65px 25px 25px !important;
+	}
+}
+@media (min-width:600px) and (max-width: 639px){
+
+}
+@media (min-width:640px) and (max-width: 654px){
+	div#loginform {
+		left: 6px;
+	}
+}
+@media (min-width:655px) and (max-width: 675px){
+	div#loginform {
+		left: 13px;
+	}
+}
+@media (min-width:676px) and (max-width: 700px){
+	div#loginform {
+		padding: 64px 35px 25px 25px !important;
+		left: 19px;
+	}
+}
+@media (min-width:736px) and (max-width:767px){
+	#bigbutton {
+		margin: 10px 0px 0 30px;
+		width: 68% !important;
+    }
+    #forgotpasslink {
+		margin: 10px 0 0 -4px !important;
+	}
+	input#user_name, input#user_password {
+		width: 180px !important;
+    }
+    div#loginform {
+		padding: 64px 65px 25px 25px !important;
+		left: 50px;
+	}
+}
+@media (min-width:768px) and (max-width:812px){
+	div#loginform {
+		left: 20px;
+	}
+}
+@media (min-width:813px) and (max-width:845px){
+	div#loginform {
+		left: 31px;
+	}
+}
+@media (min-width:846px) and (max-width:871px){
+	div#loginform {
+		left: 32px;
+	}
+}
+@media (min-width:872px) and (max-width:933px){
+	div#loginform {
+		left: 41px;
+	}
+}
+@media (min-width:934px) and (max-width:991px){
+	div#loginform {
+		left: 50px;
+	}
+}
+@media (min-width: 481px) and (max-width: 599px){
+	input#user_name, input#user_password {
+		width: 165px !important;
+    }
+}
+@media (min-width: 481px) and (max-width: 500px){
+	div#loginform {
+		left: 16px;
+		padding: 64px 65px 25px 25px !important;
+	}
+}
+@media (min-width: 501px) and (max-width: 532px){
+	div#loginform {
+		left: 25px;
+		padding: 64px 65px 25px 25px !important;
+	}
+}
+@media (min-width: 533px) and (max-width: 567px){
+	div#loginform {
+		left: 30px;
+		padding: 64px 86px 25px 25px !important;
+	}
+}
+@media (min-width: 568px) and (max-width: 599px){
+	div#loginform {
+		left: 25px;
+		padding: 64px 93px 25px 25px !important;
+	}
+}
+@media (min-width: 600px) and (max-width: 639px){
+	input#user_name, input#user_password {
+		width: 168px !important;
+    }
+	div#loginform {
+		padding: 64px 85px 25px 25px !important;
+	}
+}
+/*
+@media (min-width: 640px) and (max-width: 991px;){
+	input#user_name, input#user_password {
+		width: 190px !important;
+    }
+	div#loginform {
+		padding: 64px 65px 25px 25px !important;
+	}
+}
+
+
+@media (min-width:768px) and (max-width:991px) { 
+	div#loginform {
+		left: 41px;
+		padding: 64px 65px 25px 25px !important;
+	}
+	input#user_name, input#user_password {
+		width: 190px !important;
+    }
+    #bigbutton {
+		margin: 10px 0px 0 30px;
+		width: 68% !important;
+    }
+    #forgotpasslink {
+		margin: 10px 0 0 -4px !important;
+	}
+}
+*/
+@media (min-width:992px) and (max-width:1024px) { 
+	div#loginform {
+		left: 26px !important;
+		padding: 64px 85px 25px 25px;
+	}
+	input#user_name, input#user_password {
+		width: 150px !important;
+	}
+	#bigbutton {
+		margin: 10px 0px 0 29px !important;
+		width: 50% !important;
+	}
+	#forgotpasslink {
+		margin: 10px 0 0 -28px;
+	}
+}	
+@media (min-width:1025px) and (max-width:1040px) { 
+	div#loginform {
+		left: 24px !important;
+		padding: 64px 89px 25px 25px;
+	}
+	input#user_name, input#user_password {
+		width: 155px !important;
+	}
+	#bigbutton {
+		margin: 10px 0px 0 38px !important;
+		width: 50% !important;
+	}
+}	
+
+@media (min-width:1041px) and (max-width:1180px) { 
+	div#loginform {
+		left: 15px !important;
+	}
+}
+@media (min-width:1081px) and (max-width:1100px) { 
+	div#loginform {
+		left: 19px !important;
+		padding: 64px 65px 25px 25px;
+	}
+}
+@media (min-width:1101px) and (max-width:1125px) { 
+	div#loginform {
+		left: 20px !important;
+		padding: 64px 65px 25px 25px;
+	}
+}
+@media (min-width:1041px) and (max-width:1125px) { 
+	input#user_name, input#user_password {
+		width: 180px !important;
+	}
+	#bigbutton {
+		margin: 10px 0px 0 29px !important;
+		width: 62% !important;
+	}
+}
+@media (min-width:1126px) and (max-width:1222px) {
+	div#loginform {
+		left: 20px !important;
+		padding: 64px 60px 25px 25px !important;
+	}
+	input#user_name, input#user_password {
+		width: 190px !important;
+	}
+	#bigbutton {
+		margin: 10px 0px 0 31px !important;
+		width: 68% !important;
+	}
+	#forgotpasslink {
+		margin: 10px 0 0 -2px;
+	}
+}
+@media (min-width:1223px) and (max-width:1242px) { 
+	div#loginform {
+		left: 26px;
+	}
+}		
+@media (min-width:1243px) and (max-width:1270px) { 
+	div#loginform {
+		left: 26px;
+		padding: 64px 51px 25px 25px !important;
+	}
+}
+@media (min-width:1223px) and (max-width:1270px) { 
+	input#user_name, input#user_password {
+		width: 200px !important;
+	}
+}
+@media (min-width:1271px) and (max-width:1292px) { 
+	input#user_name, input#user_password {
+		width: 206px !important;
+	}
+}
+@media (min-width:1293px) and (max-width:1328px) { 
+	input#user_name, input#user_password {
+		width: 206px !important;
+	}
+}
+@media (min-width:1329px) and (max-width:1345px) { 
+	div#loginform {
+		left: -28px;
+		margin: 10px 0px 0 39px;
+	}
+}
+
+/* End of custom code */
+
+
+ .body { 
+	font-size: 12px;
+}
+	
+.buttonLogin {
+	border: 1px solid #444444;
+	font-size: 11px;
+	color: #ffffff;
+	background-color: #666666;
+	font-weight: bold;
+}
+	
+table.tabForm td {
+    border: none;
+}
+	
+p {
+	MARGIN-TOP: 0px;
+	MARGIN-BOTTOM: 10px;
+}
+	
+form {
+	margin: 0px;
+}
+
+input[type="text"], input[type="password"], textarea {
+	width: 200px !important;
+}
+
+#recaptcha_image {
+    height: 47.5px !important;
+    width: 250px !important;
+}
+
+#recaptcha_image img {
+    height: 47.5px;
+    width: 250px;
+} 	
+
+.loginBox {
+	border: 1px solid #abc3d7; 
+	padding: 20px;	
+
+}
+
+.password {
+	padding: 5px 20px 5px 20px;
+	border: 1px solid #999;
+	border-top: 0px none;
+	background-color: #fff;
+}
+
+.password .login_more div:first-child {
+	text-align: right;
+}
+
+.password a { 
+	text-decoration: none;
+}
+
+.password a img {
+	margin-right: 5px;
+}	
+
+#forgot_password_dialog table {
+	margin-top: 10px;	
+}
+
+.dashletPanelMenu .bd .bd-center {
+	padding-top: 0px;
+}
+

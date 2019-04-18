@@ -1,0 +1,288 @@
+<?php
+
+ob_start();
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
+require_once('include/Sugarpdf/Sugarpdf.php');
+
+class AOS_QuotesSugarpdfpinvoiceictpoff extends Sugarpdf
+{
+    /**
+     * Override
+     */
+    function process(){
+        
+        $this->display();
+        $this->buildFileName();
+    }
+
+    /**
+     * Custom header
+     */
+    public function Header()
+    {
+
+    }
+
+    /**
+     * Custom header
+     */
+    public function Footer()
+    {
+        $this->SetFont(PDF_FONT_NAME_MAIN, '', 8);
+        $this->MultiCell(0,0,'TCPDF Footer', 0, 'C');
+    }
+
+    /**
+     * Main content
+     */
+    function display()
+    {
+        global $sugar_config;
+// set margins
+        setlocale(LC_MONETARY, 'en_IN');
+        $this->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+        $proformaInvoiceBean = BeanFactory::getBean('AOS_Quotes',$_REQUEST['id']);
+        $ap = $proformaInvoiceBean->get_linked_beans('project_aos_quotes_1');
+        $userBean = BeanFactory::getBean('Users','5eb35c29-8944-28f5-3f1c-59436623fb2e');
+
+        $participants = json_decode(html_entity_decode($proformaInvoiceBean->participant_list_c));
+        $participants = array_map(function($o){
+                                return $o->name;
+                             }, $participants
+                    );    
+        $no_of_participants = count($participants);
+
+        $this->AddPage();
+        $this->SetFont(PDF_FONT_NAME_MAIN,'',PDF_FONT_SIZE_MAIN);
+        $this->Ln();
+
+        $image_file = K_PATH_IMAGES.'company_logo.png';
+        $this->Image($image_file, 30, 10, 45, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $now = date('d-M-Y');
+        
+        $pcode = @$ap[0]->programme_id_c;
+        $fee = $proformaInvoiceBean->programme_fee_c;
+        $fee = money_format('%!i', number_format($fee, 2, '.', ''));
+        $tax_amt = $proformaInvoiceBean->tax_amount;
+        $tax_amt = money_format('%!i', number_format($tax_amt, 2, '.', ''));
+        $total_amt = $proformaInvoiceBean->total_amount;
+        $total_amt = money_format('%!i', number_format($proformaInvoiceBean->total_amount, 2, '.', ''));
+        $no_of_participants = count($proformaInvoiceBean->no_of_participants_c);
+
+        $tax_amt = money_format('%!i', number_format($proformaInvoiceBean->tax_amount, 2, '.', ''));
+
+        $cgst = number_format($proformaInvoiceBean->cgst_c,2);
+        $sgst = number_format($proformaInvoiceBean->sgst_c,2);
+        $igst = number_format($proformaInvoiceBean->igst_c,2);
+    
+        $billing_address_state = $proformaInvoiceBean->billing_address_state;
+        
+        if (strpos($billing_address_state, 'Telangana') !== false) {
+            $igst = '';
+            $igst_rate = '';
+            $cgst_rate = 9;
+            $sgst_rate = 9;
+        }else{
+            $cgst = '';
+            $sgst = '';
+            $igst_rate = 18;
+            $cgst_rate = '';
+            $sgst_rate = '';
+        } 
+
+        $html = <<<EOD
+          <table width="100%" border="0" cellspacing="1" cellpadding="1">
+          <tr><td align="center" style="font-size:35px"><b>ADMINISTRATIVE STAFF COLLEGE OF INDIA</b></td></tr>
+          <tr><td align="center" style="font-size:30px">Bella Vista, Hyderabad - 500 082, Telangana, India</td></tr>
+          <tr><td align="center" style="font-size:30px">Phone: 0091-040- 66533086, Tele. Fax: 0091-040- 23317237</td></tr>
+          <tr><td align="center" style="font-size:30px">e-mail: fo@asci.org.in</td></tr>
+          </table>
+
+          
+              <div>
+            <table style="font-size:30px"   >
+                <tbody>
+                    <tr>
+                        <td align="left">
+                            <div>{$userBean->name}</div>
+                            <div> Programmes Officer</div>
+                        </td>
+                        <td align="right">Date: {$now}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <strong style="font-size:30px"><u>PROFORMA INVOICE FOR ICTP OFF CAMPUS (IN INR)</u></strong>
+            <br><br>
+                <table cellpadding="4" border="1" style="font-size:30px">
+                    <tbody>
+                        <tr>
+                            <td width="20%">1.</td>
+                            <td width="140%">No. of participants</td>
+                            <td width="140%">{$no_of_participants}</td>
+                        </tr>                   
+                        <tr>
+                            <td width="20%">2.</td>
+                            <td width="140%">Program Code</td>
+                            <td width="140%">{$pcode}</td>
+                        </tr>    
+                        <tr>
+                            <td width="20%">3.</td>
+                            <td width="140%">Title of the Program</td>
+                            <td width="140%">{$ap[0]->name}</td>
+                        </tr>
+                        <tr>
+                            <td width="20%">4.</td>
+                            <td width="140%">Fee per day Rs.”Amount” for minimum of 25 participants </td>
+                            <td width="140%">{$fee}</td>
+                        </tr>       
+                        <tr>
+                            <td width="20%">5.</td>
+                            <td colspan="1" width="140%">
+                                <table width="100%" border="1" style="font-size:30px" cellpadding="2">
+                                    <tr>
+                                        <td>Tax Description</td>
+                                        <td>Tax Rate %</td>
+                                        <td>Tax Amount</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            CGST
+                                        </td>
+                                        <td>
+                                           $cgst_rate
+                                        </td>
+                                        <td>
+                                           $cgst
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                           SGST
+                                        </td>
+                                        <td>
+                                           $sgst_rate
+                                        </td>
+                                        <td>
+                                           $sgst
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                           IGST
+                                        </td>
+                                        <td>
+                                            $igst_rate
+                                        </td>
+                                        <td>
+                                           $igst
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </td>
+                            <td width="140%">{$tax_amt}</td>
+                        </tr>    
+                        <tr>
+                            <td width="20%"></td>
+                            <td align="right" width="140%">Total </td>
+                            <td width="140%">{$total_amt}</td>
+                        </tr> 
+                        <tr>
+                            <td colspan="3">Reimbursement of the faculty Airfare, Local travel and Stay expenses may please be added as per the<div> actuals</div></td>
+                        </tr>       
+                        <tr>
+                            <td width="20%">8.</td>
+                            <td width="140%">Sponsor Organization</td>
+                            <td width="140%">{$proformaInvoiceBean->billing_account}</td>
+                        </tr>
+                        <tr>
+                            <td width="20%">9.</td>
+                            <td width="140%">Kind Attention</td>
+                            <td width="140%">{$proformaInvoiceBean->kind_attention_c}</td>
+                        </tr>        
+                        <tr>
+                            <td width="20%"><strong>8</strong></td>
+                            <td width="140%"><strong>PAN NO: AAATA2442A</strong></td>
+                            <td width="140%"><strong>SERVICE TAX REGD NO: AAATA2442AST001</strong></td>
+                        </tr>                                           
+                    </tbody>
+                </table>
+
+        <br>
+        <span style="font-size:28px;" align="left">We will be grateful if you could send the payment to the undersigned, favoring “ADMINISTRATIVE STAFF COLLEGE OF INDIA “ payable at Hyderabad or alternatively you could remit th'e payment by Direct Transfer to our Bank account as detailed below, at the earliest under intimation to us. 
+        </span>
+            <br>
+            <div>
+                <table cellpadding="4" border="1" style="font-size:30px">
+                    <tbody>
+                        <tr>
+                            <td colspan="2">BANK PARTICULARS</td>
+                        </tr>
+                        <tr>
+                            <td>Bank Name</td>
+                            <td>State Bank of Hyderabad</td>
+                        </tr>
+                        <tr>
+                            <td>Address line 1</td>
+                            <td>6-3-1092, Ist floor, A Block</td>
+                        </tr>
+                        <tr>
+                            <td>Address line 2</td>
+                            <td>Raj Bhavan Road Branch, (Bellavista)</td>
+                        </tr>
+                        <tr>
+                            <td>Address line 3</td>
+                            <td>Hyderabad – 500 082</td>
+                        </tr>
+                        <tr>
+                            <td>Beneficiary Account Name</td>
+                            <td>Administrative Staff College of India</td>
+                        </tr>
+                        <tr>
+                            <td>Bank Account Number</td>
+                            <td>62090698675</td>
+                        </tr>
+                        <tr>
+                            <td>Bank MICR No</td>
+                            <td>500004008</td>
+                        </tr>
+                        <tr>
+                            <td>NEFT IFSC Code</td>
+                            <td>SBHY0020063</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+                *Please Note: It is mandatory to mention our Program Code and your Organization Name while<br>remitting the fee through Bank Transfer / Wire Transfer.
+            
+            <br><br>
+            <span style="font-size:30px">{$userBean->name}</span>
+            </div>
+EOD;
+// print_r(error_get_last());exit();
+
+        $this->writeHTML($html, true, false, false, false, '');      
+        
+    }
+
+    /**
+     * Build filename
+     */
+    function buildFileName()
+    {
+        $this->fileName = 'example.pdf';
+    }
+
+    /**
+     * This method draw an horizontal line with a specific style.
+     */
+    protected function drawLine()
+    {
+        $this->Cell(20, 10, $date->format('d.m.Y'), 0, false, 'L', 0, '', 0, false, 'T', 'M');   
+        $this->Cell(20, 10, 'Creator', 0, false, 'C', 0, '', 0, false, 'T', 'M'); 
+        $this->Cell(20, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
+    }
+}

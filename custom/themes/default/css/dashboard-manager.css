@@ -1,0 +1,54 @@
+#user_list_id li{
+	list-style:none;
+	}	
+	
+div.pagination {
+    font-family: "Lucida Sans", Geneva, Verdana, sans-serif;
+    padding:20px;
+    margin:7px;
+}
+
+div.pagination a {
+    margin: 2px;
+    padding: 0.5em 0.64em 0.43em 0.64em;
+    background-color: #ee4e4e;
+    text-decoration: none;
+    color: #fff;
+}
+div.pagination a:hover, div.pagination a:active {
+    padding: 0.5em 0.64em 0.43em 0.64em;
+    margin: 2px;
+    background-color: #de1818;
+    color: #fff;
+}
+div.pagination span.current {
+    padding: 0.5em 0.64em 0.43em 0.64em;
+    margin: 2px;
+    background-color: #f6efcc;
+    color: #6d643c;
+}
+div.pagination span.disabled {
+    display:none;
+}	
+	
+.dataTables_wrapper .dataTables_paginate .paginate_button{
+color:#2767A8 !important;
+vertical-align:middle;
+	}
+
+table.dataTable.select tbody tr,
+table.dataTable thead th:first-child {
+  cursor: pointer;
+}
+table.dataTable.display tbody tr.odd > .sorting_1, table.dataTable.order-column.stripe tbody tr.odd > .sorting_1 { 
+  background-color: #f9f9f9 !important;
+}
+table.dataTable.display tbody tr.even > .sorting_1, table.dataTable.order-column.stripe tbody tr.even > .sorting_1 {
+   background-color: #ffffff !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    color: #2767A8 !important;
+    border: 0px solid #111;
+    background-color: none;
+    background: none;
+}

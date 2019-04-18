@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
+<title>Word Report</title>
+<style>
+<!--
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+    {
+    font-size:12.0pt;
+    font-family:"Times New Roman";}
+@page Section1
+    {size:595.3pt 841.9pt;
+    margin: 28.8pt 42pt 19.6pt 20pt;}
+div.Section1
+    {page:Section1;}
+  
+  .temprow
+  {
+    border:1px solid #ff00000;
+    height:220px;
+  }
+ 
+    .glyphicon-minus{
+        color: red!important;
+    }
+    .right span:hover{
+        cursor: pointer;
+        /*background-color: #eee; */
+    }
+
+    table .glyphicon-plus{
+        cursor: pointer;
+        display: block!important;
+        padding-bottom: 4px;
+    }
+    table td div span:hover{
+        cursor: pointer;
+        /*background-color: #2382D5; */
+    }
+
+    table td div .glyphicon-remove{
+        padding-left: 4px!important;
+    }
+
+    .drop{
+        padding: 0!important;
+    }
+    .w50{
+        width: 50%!important;display: inline-block;
+    }
+    .w33{
+        width: 33.3333333333%!important;display: inline-block;
+    }
+
+    .w25{
+        width: 25%!important;display: inline-block;
+    }
+    .w100{
+        width: 100%!important;
+    }
+    .session-data{
+        border:1px solid #ddd;padding: 9px;;
+    }
+    .session-mix-time{
+        font-size: 10px;
+        width: auto;
+        border-bottom: 1px solid #ddd;
+        padding-left: 27px;
+        padding-bottom: 2px;
+    }
+    .popover.clockpicker-popover{
+        z-index: 9999;
+    }
+table#timetable_table{
+        border: 1px solid #ddd;
+}
+
+-->
+</style>
+</head>
+<body>
+  <div class="Section1">
+    <div class="MsoNormal">
+        <div class="right">
+        	<div align="center">
+			
+			<h4>ADMINISTRATIVE STAFF COLLEGE OF INDIA<br>BELLA VISTA : HYDERABAD - 500 082</h4>
+						
+		</div>
+			<div align="center"><strong><span>Time Session</span></strong></div>
+            <table id="timetable_table" class="table table-bordered table-responsive"  border="1">
+                <tr>
+					<td style="border:1px solid #000;border-collapse: collapse;text-align: center;padding:5px;" width="200px">
+						<span>Day</span>/<span>Date</span>
+					</td>
+					<td style="border:1px solid #000;border-collapse: collapse;text-align: center;padding:5px;" width="200px">
+						<strong>	09:00 - 10:30</strong>
+					</td>
+					<td style="border:1px solid #000;border-collapse: collapse;text-align: center;padding:5px;" width="200px">
+						<strong>	11:00 - 12:30</strong>
+					</td>
+					<td style="border:1px solid #000;border-collapse: collapse;text-align: center;padding:5px;" width="200px">
+						<strong>	14:00 - 15:30</strong>
+					</td>
+					<td style="border:1px solid #000;border-collapse: collapse;text-align: center;padding:5px;" width="200px">
+						<strong>	16:00 - 17:30</strong>
+					</td>
+					<td style="border:1px solid #000;border-collapse: collapse;text-align: center;" width="200px">
+						<strong>	18:00 - 19:30</strong>
+					</td>
+				</tr>
+
+                <tr><td style='text-align: center;'><div>Sunday</div><div>17-03-2019</div></td></tr><tr><td style='text-align: center;'><div>Monday</div><div>18-03-2019</div></td><td style='text-align: center;'><div class='session-mix-time'>05:30 - 07:00</div><div>Day 2 - Session 2</div><div>-<small><strong></strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>08:30 - 10:00</div><div>Day 2 - Session 3</div><div>-<small><strong></strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>10:30 - 12:00</div><div>Day 2 - Session 4</div><div>-<small><strong></strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>12:30 - 14:00</div><div>Day 2 - Session 5</div><div>-<small><strong></strong></small></div> </td></tr><tr><td style='text-align: center;'><div>Tuesday</div><div>19-03-2019</div></td><td style='text-align: center;'><div class='session-mix-time'>05:30 - 07:00</div><div>Day 3 - Session 2</div><div>-<small><strong></strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>08:30 - 10:00</div><div>Day 3 - Session 3</div><div>-<small><strong></strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>10:30 - 12:00</div><div>Day 3 - Session 4</div><div>-<small><strong></strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>12:30 - 14:00</div><div>Day 3 - Session 5</div><div>-<small><strong></strong></small></div> </td></tr><tr><td style='text-align: center;'><div>Wednesday</div><div>20-03-2019</div></td><td style='text-align: center;'><div class='session-mix-time'>05:30 - 07:00</div><div>Day 4 - Session 2</div><div>-<small><strong></strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>08:30 - 10:00</div><div>Day 4 - Session 3</div><div>-<small><strong></strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>10:30 - 12:00</div><div>Day 4 - Session 4</div><div>-<small><strong></strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>12:30 - 14:00</div><div>Day 4 - Session 5</div><div>-<small><strong></strong></small></div> </td></tr><tr><td style='text-align: center;'><div>Thursday</div><div>21-03-2019</div></td><td style='text-align: center;'><div class='session-mix-time'>05:30 - 07:00</div><div>Day 5 - Session 2</div><div>-<small><strong></strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>08:30 - 10:00</div><div>Day 5 - Session 3</div><div>-<small><strong></strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>10:30 - 12:00</div><div>Day 5 - Session 4</div><div>-<small><strong></strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>12:30 - 14:00</div><div>Day 5 - Session 5</div><div>-<small><strong></strong></small></div> </td></tr><tr><td style='text-align: center;'><div>Friday</div><div>22-03-2019</div></td><td style='text-align: center;'><div class='session-mix-time'>05:30 - 07:00</div><div>Day 6 - Session 2</div><div>-<small><strong></strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>08:30 - 10:00</div><div>Day 6 - Session 3</div><div>-<small><strong></strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>10:30 - 12:00</div><div>Day 6 - Session 4</div><div>-<small><strong></strong></small></div> </td><td style='text-align: center;'><div class='session-mix-time'>12:30 - 14:00</div><div>Day 6 - Session 5</div><div>-<small><strong></strong></small></div> </td></tr>
+        
+        </div>
+
+
+   </div>
+   </div>
+</body>
+</html>

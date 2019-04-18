@@ -1,0 +1,28 @@
+<?php
+// created: 2017-09-19 15:42:16
+$mod_strings = array (
+  'LBL_PROPOSAL_STATUS_ASCI' => 'Work Order status',
+  'LBL_ASCI_RPF_REFERENCE' => 'ASCI RFP reference',
+  'LBL_PROPOSAL_ID' => 'Proposal ID',
+  'LBL_CLIENT_WORK_ORDER_REFERENCE' => 'Client Work Order Reference Number',
+  'LBL_CLIENT_WORK_ORDER_DATE' => 'Client Work Order Date',
+  'LBL_TOTAL_NO_PROGRAMMES_AWARDED' => 'Total Number of Programmes awarded',
+  'LBL_LINKED_PROGRAMME_CODES' => 'Linked Programme codes',
+  'LBL_TOTAL_EXPECTED_REVENUE' => 'Total expected revenue',
+  'LBL_OTHER_PAYMENT_T_C' => 'Other Payment T&C',
+  'LBL_WORK_ORDER_DOCUMENT_ID' => 'Work Order Document ID',
+  'LBL_MIN_PARTICIPANTS_PER_BATCH' => 'Minimum Participants per batch',
+  'LBL_MAX_PARTICIPANTS_PER_BATCH' => 'Maximum Participants per batch',
+  'LBL_SP_TOTAL_EXPECTED_REVENUE' => 'Total expected Revenue',
+  'LBL_UTILISATION_CERTIFICATE_REQ' => 'Utilisation Certificate Required',
+  'LBL_NAME' => 'Programme TItle',
+  'LBL_ACCOUNTS_SCRM_WORK_ORDER_1_FROM_ACCOUNTS_TITLE' => 'Client Organisation Name',
+  'LBL_LEAD_FAC_1_CENTRE' => 'Lead Fac-1 Centre',
+  'LBL_LEAD_FAC_2_CENTRE' => 'Lead Fac-2 Centre',
+  'LBL_LEAD_FACULTY_1_SCRM_PARTNERS_ID' => 'Lead Faculty 1 (related Faculty ID)',
+  'LBL_LEAD_FACULTY_1' => 'Lead Faculty 1',
+  'LBL_LEAD_FACULTY_2_SCRM_PARTNERS_ID' => 'Lead Faculty-2 (related Faculty ID)',
+  'LBL_LEAD_FACULTY_2' => 'Lead Faculty-2',
+  'LBL_SCRM_WORK_ORDER_SCRM_PROGRAMME_INFORMATION_1_FROM_SCRM_PROGRAMME_INFORMATION_TITLE' => 'Programme Information',
+  'LBL_SECURITYGROUPS_SCRM_WORK_ORDER_1_FROM_SECURITYGROUPS_TITLE' => 'Centres',
+);

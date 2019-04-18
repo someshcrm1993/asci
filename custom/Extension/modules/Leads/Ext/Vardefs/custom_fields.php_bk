@@ -1,0 +1,11 @@
+<?php
+	 // created: 2017-7-21
+	$dictionary['Lead']['fields']['do_not_call']['massupdate']=false;
+	$dictionary['Lead']['fields']['portal_account_disabled']['massupdate']=false;
+	$dictionary['Lead']['fields']['Sync']['massupdate']=false;
+	$dictionary['Lead']['fields']['portal_user_type']['massupdate']=false;
+	$dictionary['Lead']['fields']['optout_primary']['massupdate']=false;
+	$dictionary['Lead']['fields']['lead_source']['massupdate']=false;
+	$dictionary['Lead']['fields']['opportunity_role']['massupdate']=false;
+	$dictionary['Lead']['fields']['assigned_user_name']['massupdate']=false;
+?>

@@ -1,0 +1,17 @@
+<?php
+
+print opencnam_fetch("4102152497");
+
+function opencnam_fetch( $phoneNumber ) {
+$request_url = "https://api.opencnam.com/v1/phone/" . $phoneNumber . "?format=text";
+//
+//$request = curl_init();
+//curl_setopt($request, CURLOPT_URL, $request_url);
+//curl_setopt($request, CURLOPT_RETURNTRANSFER, TRUE);
+//$response = curl_exec($request);
+
+
+    return $response;
+}
+
+?>

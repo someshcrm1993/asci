@@ -1,0 +1,434 @@
+{*******************************************
+	Lineitem for adding participant list
+	@author: 		Rathina Ganesh
+	@date: 			27th May 2017
+********************************************}
+{if $view eq 'EditView'}
+{literal}
+<style type="text/css">
+	#myModal tr td a:hover{
+		cursor: pointer;
+	}
+</style>
+<script>
+var a;
+var participant_array = [];
+var addedlist = [];
+var list = '';
+$(document).ready(function(){
+	
+	$('.organisation').on('click blur',function(){
+		$.ajax({
+			type:'GET',
+			url:'index.php?entryPoint=ajaxCall',
+			data:{type:'getOrganisationAddr',orgid:$('#billing_account_id').val()},
+			async:false,
+			dataType:'json',
+			beforeSend:function(){
+			},
+			complete:function(){
+			},
+			success:function(res)
+			{
+				$('#billing_address_street').val(res.data.billing_address_street);
+				$('#billing_address_city').val(res.data.billing_address_city);
+				$('#billing_address_state').val(res.data.billing_address_state);
+				$('#billing_address_postalcode').val(res.data.billing_address_postalcode);
+				$('#billing_address_country').val(res.data.billing_address_country);
+			}
+		});
+	});
+	
+	$('#billing_account').attr('readonly',true);
+	if($('input[name=record]').val()){
+		fetchParticipant();
+		// pushParticipantList(participant_array,addedlist);
+	}
+
+	$('#participant_list_c_label').parent().hide();
+	programmeType();
+	$('#programme_type_c').on('change',function(){
+		programmeType();
+	});
+
+	// $('#btn_project_aos_quotes_1_name,#project_aos_quotes_1_name,#billing_account,#btn_billing_account').on('blur change',function(){
+		
+	// });
+	
+	$('#btn_clr_billing_account').on('blur',function(){
+		$('.list-group').html('');
+		$('#no_of_participants_c').val(0);
+		participant_array = [];		
+		calculateAmount('','ICTP','');	
+	});	
+
+	$('#myModal').on('hidden.bs.modal', function () {
+		$('.list-group').html('');
+	    fetchParticipant();// do something…
+	})
+
+	$('#btn_billing_account').on('blur',function(){
+		fetchParticipant();
+	});
+
+	$('#currency_id_select').change(function(){
+		fetchParticipant();
+	});
+
+	$('#discount_in_per_c').on('blur change',function(){
+		addParticipantList(participant_array);
+	});
+	$('#no_of_participants_c').on('blur change',function(){
+		calculateAmount('','ICTP','');
+	});
+  	$('#participant_c').after('&nbsp;&nbsp;<button type="button" class="btn btn-primary" id="addlist">Add</button>');
+  	
+  	$('#addlist').on('click',function(){
+  		//console.log(participant_array);
+  		var pname = $('#participant_c :selected').text();
+  		var pid = $('#participant_c').val();
+  		var type = $('#participant_c :selected').data('type');
+  		if(!pname){
+  			alert('Please select the participant to add in list');
+  			return;
+  		}
+  		//var participant_array = JSON.parse($('#participant_list_c').val());
+  		//console.log(participant_array);
+  		for(var x in participant_array){
+  			if(participant_array.hasOwnProperty(x)){
+  				if(participant_array[x].id == pid){
+  					alert('Already '+participant_array[x].name+' has been added in the list');
+  					return;
+  				}
+  			}
+  		}
+  		var participant_name = '';
+  		var add_name = {
+  			"name":pname,
+  			"id":pid,
+  			"type":type
+  		};
+  		//console.log('Ganesh');
+  		participant_array.push(add_name);
+  		addParticipantList(participant_array);
+  		$('#participant_list_c').val(JSON.stringify(participant_array));		
+	});
+
+	// $('.delete').on('click',function(){
+	$(document).on('click','.delete',function(){
+		var participant_array1 = participant_array;
+
+		
+		var non_resident = 0;
+		var resident = 0;
+		// console.log("existing list"+participant_array1);
+		participant_array = [];
+		$('#'+$(this).attr("id")).parent().hide();
+		for (var x in participant_array1){
+		  if (participant_array1.hasOwnProperty(x)){
+		  	//console.log($(this).attr("id"));
+		  	//console.log(new_participant_array[x].id);
+		  	if(participant_array1[x].id != $(this).attr("id"))
+		  	{
+		  		var add_name = {
+		  			"name":participant_array1[x].name,
+		  			"id":participant_array1[x].id,
+		  			"type": participant_array1[x].type
+				};
+			  	participant_array.push(add_name);
+			  	if (participant_array1[x].type != null && participant_array1[x].type=="Residential") { resident++; }
+			  	else if(participant_array1[x].type != null && participant_array1[x].type=="NonResidential"){ non_resident++; }
+			  	else{ resident++; }
+		  	}
+
+
+		  }	
+		}
+
+		var typeOfParticipant = {
+			  			"non_resident":non_resident,
+			  			"resident":resident
+		};
+
+		if ($('#programme_type_c').val() == 'Announced') {
+
+			calculateAmount(participant_array,'AP',typeOfParticipant);				
+		}else{
+			calculateAmount('','ICTP','');				
+		}
+		
+		// calculateAmount(participant_array,'AP','');
+		// console.log("New List"+participant_array);
+		$('#participant_list_c').val(JSON.stringify(participant_array));				
+	});
+});
+
+function programmeType(){
+	if($('#programme_type_c').val() == 'Announced'){
+		$('#no_of_participants_c_label').parent().hide();
+		$('#participant_c_label').parent().show();
+		$('#line_items_label').parent().show();
+	}else{
+		$('#participant_list_c').val('');
+		$('#no_of_participants_c_label').parent().show();
+		$('#participant_c_label').parent().hide();
+		$('#line_items_label').parent().hide();
+	}
+}
+
+var discount_eligibility = false;
+function fetchParticipant(){
+	
+	$.ajax({
+		type:'GET',
+		url:'index.php?entryPoint=ajaxCall',
+		data:{type:'getparticipantlist',pid:$('#project_aos_quotes_1project_ida').val(),orgid:$('#billing_account_id').val(),currency:$('#currency_id_select').val()},
+		async:false,
+		dataType:'json',
+		beforeSend:function(){
+		},
+		complete:function(){
+		},
+		success:function(res)
+		{
+			participant_array = [];
+			if(res.Success){
+				var options = '<option value=""></option>';
+				$.each(res.data.name,function(k,v){
+					var split = v.toString().split(",");
+
+					options += '<option data-type="'+res.data.type_c[k]+'" value="'+split[1]+'">'+split[0]+'</option>';
+			  		var add_name = {
+			  			"name":split[0],
+			  			"id":split[1],
+			  			"type":res.data.type_c[k]
+			  		};
+			  		
+			  		participant_array.push(add_name);
+			  		
+			  		
+				});
+				
+				$('#participant_list_c').val(JSON.stringify(participant_array));
+
+				$('#programme_fee_c').val(parseFloat(res.data.programme_fee_c[0]).toFixed(2));
+				$('#programme_fee_non_res_c').val(parseFloat(res.data.programme_fee_non_res_c[0]).toFixed(2));
+				
+				$('#participant_c').html(options);
+		  		
+				pushParticipantListAuto(participant_array,addedlist);
+
+				if (res.discount) {
+					discount_eligibility = true;
+				}
+
+			}else{
+				$('#participant_c').html('');
+				$('#programme_fee_c').val('');
+			}
+		}
+	});
+	
+}	
+
+function pushParticipantListAuto(participant_array,addedlist){
+	console.log($('.list-group').html(''));
+
+	if($('#participant_list_c').val().length){
+		var list = JSON.parse($('#participant_list_c').val());
+		var non_resident = 0;
+		var resident = 0;
+		for (var x in list){
+		  if (list.hasOwnProperty(x)){
+		    $('.list-group').append('<li class="list-group-item" >'+list[x].name+'<span style="float:right" class="glyphicon glyphicon-remove delete" id="'+list[x].id+'" data-type="'+list[x].type+'"></span></li>');
+			if (list[x].type != null && list[x].type=="Residential") { resident++; }
+			else if(list[x].type != null && list[x].type=="NonResidential"){ non_resident++; }
+			else{ resident++; }		    
+		  }
+		}
+		var typeOfParticipant = {
+			  			"non_resident":non_resident,
+			  			"resident":resident
+		};
+		if ($('#programme_type_c').val() == 'Announced') {
+
+			calculateAmount(participant_array,'AP',typeOfParticipant);				
+		}else{
+			calculateAmount(participant_array,'ICTP',typeOfParticipant);				
+		}
+	}
+}
+
+function pushParticipantList(participant_array,addedlist){
+	if($('#participant_list_c').val().length){
+		var list = JSON.parse($('#participant_list_c').val());
+		var non_resident = 0;
+		var resident = 0;
+		for (var x in list){
+		  if (list.hasOwnProperty(x)){
+		    $('.list-group').append('<li class="list-group-item" >'+list[x].name+'<span style="float:right" class="glyphicon glyphicon-remove delete" id="'+list[x].id+'" data-type="'+list[x].type+'"></span></li>');
+		    addedlist = {
+	  			"name":list[x].name,
+	  			"id":list[x].id,
+	  			"type": list[x].type_c
+	  		};
+	
+		    participant_array.push(addedlist);
+		  }
+		}
+	}
+}
+function addParticipantList(participant_array){
+
+	var list = '';
+	var non_resident = 0;
+	var resident = 0;
+	for (var x in participant_array){
+	  if (participant_array.hasOwnProperty(x)){
+	    list += '<li class="list-group-item"  >'+participant_array[x].name+'<span style="float:right" class="glyphicon glyphicon-remove delete" id="'+participant_array[x].id+'" data-type="'+participant_array[x].type+'"></span></li>';
+	  }	
+	  if (participant_array[x].type != null && participant_array[x].type=="Residential") { resident++; }
+	  else if(participant_array[x].type != null && participant_array[x].type=="NonResidential"){ non_resident++; }
+	  else{ resident++; }
+	}
+	var typeOfParticipant = {
+	  			"non_resident":non_resident,
+	  			"resident":resident
+	};
+	calculateAmount(participant_array,'AP',typeOfParticipant);
+	$('.list-group').html(list);
+}
+
+function calculateAmount(participant_array,type,typeOfParticipant)
+{
+	var tax_amount = 0;
+	var cgst = 0;
+	var sgst = 0;
+	var igst = 0;
+	var total_amount = 0;
+	var programme_fee = parseFloat($('#programme_fee_c').val());
+	var programme_fee_non_res = parseFloat((a = $('#programme_fee_non_res_c').val()) == ''? 0: a);
+	var discount_in_per_c = $('#discount_in_per_c').val();
+	var discount_amount = 0;
+	var npp = 0;
+
+	if(type == "ICTP"){
+		// total_amt = programme_fee * $('#no_of_participants_c').val();
+		npp = participant_array.length;
+		$('#no_of_participants_c').val(participant_array.length);
+		total_amt = (typeOfParticipant.resident * programme_fee) + (typeOfParticipant.non_resident * programme_fee_non_res);
+	}else{
+		var total_fee;
+		
+		if (participant_array.length > 1) {
+			npp = parseInt(typeOfParticipant.resident) + parseInt(typeOfParticipant.non_resident);
+			total_fee = (typeOfParticipant.resident * programme_fee) + (typeOfParticipant.non_resident * programme_fee_non_res);
+		}else{
+			if (participant_array.length >0) {
+				npp = participant_array.length;
+				
+				if (participant_array[0].type == "NonResidential") {
+					total_fee = programme_fee_non_res;	
+				}else{
+					total_fee = programme_fee;
+				}				
+			}else{
+				total_fee = 0;		
+			}
+			
+		}
+		total_amt = total_fee;
+	}
+
+
+	// if (!discount_in_per_c || discount_in_per_c == 0) {
+	// 	discount_in_per_c = 10;
+	// 	$('#discount_in_per_c').val(10);
+	// }
+
+	if (!discount_in_per_c || discount_in_per_c == 0) {
+		// discount_in_per_c = 10;
+		// $('#discount_in_per_c').val(10);
+	}
+	if (discount_in_per_c) {
+		discount_amount = total_amt * discount_in_per_c/100;
+	}
+		
+
+	// console.log(npp);
+	// console.log(programme_fee);
+	// console.log(npp>3);
+		
+	// if (npp > 3) {
+	// 	discount_amount = total_amt * discount_in_per_c/100;
+			
+	// }else{
+	// 	discount_amount = (programme_fee * discount_in_per_c/100)*npp;
+	// }
+
+	subtotal_amount = total_amt - discount_amount; 
+	cgst = subtotal_amount * 0.09;
+	sgst = subtotal_amount * 0.09;
+	// k_k_c = subtotal_amount * 0.005;
+
+	tax_amount = cgst + sgst + igst;
+	total_amount = subtotal_amount + tax_amount;
+	$('#total_amt').val(parseFloat(total_amt).toFixed(2));
+	$('#discount_amount').val(parseFloat(discount_amount).toFixed(2));
+	$('#subtotal_tax_amount').val(parseFloat(subtotal_amount).toFixed(2));
+
+	if ($('#billing_address_state').val().indexOf('Telangana') !== -1) {
+		$('#cgst_c').val(parseFloat(cgst).toFixed(2));
+		$('#sgst_c').val(parseFloat(sgst).toFixed(2));		
+		$('#igst_c').val(0);
+	}else{
+		
+		$('#cgst_c').val(0);
+		$('#sgst_c').val(0);			
+		$('#igst_c').val(parseFloat(parseFloat(cgst) + parseFloat(sgst)).toFixed(2));
+	}
+
+	$('#tax_amount').val(parseFloat(tax_amount).toFixed(2));
+	$('#total_amount').val(parseFloat(total_amount).toFixed(2));
+}
+
+</script>
+
+{/literal}
+
+{else}
+
+{literal}
+<script>
+var participant_array = [];
+$(document).ready(function(){
+	$('div[field=participant_list_c]').parent().hide();
+	$('div[field=participant_c]').parent().hide();
+	if($('#participant_list_c').text().length){
+		var list = JSON.parse($('#participant_list_c').text());
+		for (var x in list){
+		  if (list.hasOwnProperty(x)){
+		    $('.list-group').append('<li class="list-group-item" ><a target="_blank" href="index.php?&action=DetailView&module=Contacts&record='+list[x].id+'">'+list[x].name+'</a></li>');
+		  }
+		}
+	}
+
+	if($('#programme_type_c').val() == 'Announced'){
+		$('div[field=no_of_participants_c]').parent().hide();
+		$('div[field=line_items]').parent().show();
+	}else{
+		$('div[field=no_of_participants_c]').parent().show();
+		$('div[field=participant_c]').parent().hide();
+		$('div[field=line_items]').parent().hide();
+	}
+
+	var record_id = $('input[name=record]').val();
+	$('#detail_header_action_menu').before('<a href="index.php?module=AOS_Quotes&action=sugarpdf&sugarpdf=invoice&record='+record_id+'" class="glyphicon glyphicon-print fa-2x" target="_blank" style="padding-right:10px;"></a>');
+});
+</script>
+{/literal}
+
+{/if}
+<ul class="list-group">
+	
+</ul>

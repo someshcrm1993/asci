@@ -1,0 +1,349 @@
+<?php 
+
+if(!defined('sugarEntry')) define('sugarEntry', true);
+/**
+ *  @copyright SimpleCRM http://www.simplecrm.com.sg
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * @author SimpleCRM <info@simplecrm.com.sg>
+ */
+
+require_once('include/entryPoint.php');
+
+global $sugar_config;
+
+$access_token = "EAAW7RFqX6T0BAPtseWHxe1ub8GDoHeMU8eZAZCGevE4uBgaZCEP038FL32auT1cGDsloklZAdB3huay70S7OEHZAkusSP6ii7ekqHsSJgkuMNSsmxNNDN36LwfSZBtxsQr2Ts9rGxvkqYpWxIxoiHmOXOVCqINcC0tEzbyMuW0ZAQZDZD";
+
+$user_details= "https://graph.facebook.com/710249769114185/feed?&method=GET&access_token=" .$access_token;
+$response = file_get_contents($user_details);
+$response = json_decode($response);
+
+$data         = $response->data;
+
+foreach($data as $data_comment){ 
+
+echo $comment_id             = $data_comment->id;echo "<br>";
+echo $message                = $data_comment->message;echo "<br>";
+echo $message_from_name      = $data_comment->from->name;echo "<br>";
+echo $message_from_id        = $data_comment->from->id;echo "<br>";
+echo $message_created_time   = $data_comment->created_time;echo "<br>";
+echo $message_updated_time   = $data_comment->updated_time;echo "<br>";
+
+
+echo "message in lowercase : ". $message = strtolower($message);echo "<br>";
+
+
+if ( strpos($message,'recommend') !== false || strpos($message,'propose') !== false || strpos($message,'internet plans') !== false || strpos($message,'introduce') !== false || strpos($message,'internets') !== false || strpos($message,'mobile phone') !== false || strpos($message,'advise') !== false || strpos($message,'suggest') !== false || strpos($message,'home loan') !== false || strpos($message,'car loan') !== false){
+
+$user_idd = $message_from_id;
+$user_details202= "https://graph.facebook.com/".$user_idd."?&method=GET&access_token=" .$access_token;
+$response202 = file_get_contents($user_details202);
+$response202 = json_decode($response202);
+
+$message_from_name       = $response202->name;
+$message_from_first_name = $response202->first_name;
+$message_from_last_name  = $response202->last_name;
+$message_from_id         = $response202->id;
+
+$fb_link_to_user ="https://www.facebook.com/".$message_from_id;
+$fb_link_to_post ="https://www.facebook.com/".$comment_id;
+
+$lead_full_name                = $message_from_name;
+$lead_first_name               = $message_from_first_name;
+$lead_last_name                = $message_from_last_name;
+$lead_facebook_id              = $message_from_id;
+$lead_source                   = "Facebook";
+$time_and_date_of_post         = $message_created_time; // $Published_date	
+$time_and_date_of_post_split   = split("T", $time_and_date_of_post);
+$date                          = $time_and_date_of_post_split['0'];
+$time                          =  str_replace("+0000","",$time_and_date_of_post_split['1']);
+$time                          = rtrim($time_and_date_of_post_split['1'], "+0000");
+$time_corrected                = date('H:i:s', strtotime('+330 minutes', strtotime($time))); // for time_zone : +5:30
+$time_and_date_of_post_correct = $date." ".$time_corrected;
+
+$lead_description         = "Post : ".$message." , Posted On : ".$time_and_date_of_post_correct." , Link to Facebook Profile : ".$fb_link_to_user." , Link to Post : ".$fb_link_to_post;
+
+$lead_assigned_user_name  = "Sarah Dally";
+$lead_assigned_user_id    = "746c64c4-6656-a101-3a6e-55d72a3e1628";
+
+    $lead = new Lead();
+    $lead->first_name              = $lead_first_name;
+    $lead->last_name               = $lead_last_name;
+    $lead->lead_source             = $lead_source;   
+    $lead->description             = $lead_description;
+    $lead->assigned_user_name      = $assigned_user_name;
+    $lead->assigned_user_id        = $lead_assigned_user_id;
+    $lead->posted_message_id_c     = $comment_id;
+    $lead->post_from_id_c          = $message_from_id;
+    $lead->status                  = "New";
+    $lead->classification_c        = "Warm";
+
+global $db;
+
+//$query1  = "SELECT id_c FROM leads_cstm, leads WHERE id = id_c AND deleted = 0 AND posted_message_id_c = '$comment_id'";
+
+$query1  =   "SELECT id_c FROM leads_cstm, leads WHERE id = id_c AND posted_message_id_c = '$comment_id'";
+$value1  =   $db->query($query1);
+$check1  =   $get_values_row1  = $db->fetchByAssoc($value1);
+
+if(!$check1){
+$lead->save();	
+echo '<b>Lead created.</b>'; echo '<br>';
+}
+
+
+
+//create note based on user reply to comment in fb
+$user_details2= "https://graph.facebook.com/".$comment_id."/comments?&method=GET&access_token=" .$access_token;
+$response2 = file_get_contents($user_details2);
+$response2= json_decode($response2);
+$data_outu         = $response2->data;
+
+foreach($data_outu as $data_outu_comment){ 
+
+$comment_id_outu             = $data_outu_comment->id;
+$message_outu                = $data_outu_comment->message;
+$message_from_name_outu      = $data_outu_comment->from->name; 
+$message_from_id_outu        = $data_outu_comment->from->id; 
+$message_created_time_outu   = $data_outu_comment->created_time;
+
+
+$query9  =   "SELECT id_c FROM leads_cstm,leads WHERE id_c = id AND deleted = 0  AND posted_message_id_c = '$comment_id' ";
+$result9 =   $db->query($query9);
+$check9  =   $get_values_row9  = $db->fetchByAssoc($result9);
+
+$lead_id_c = $get_values_row9['id_c'];
+
+$time_and_date_of_post         = $message_created_time_outu; // $Published_date	
+$time_and_date_of_post_split   = split("T", $time_and_date_of_post);
+$date                          = $time_and_date_of_post_split['0'];
+$time                          =  str_replace("+0000","",$time_and_date_of_post_split['1']);
+$time                          = rtrim($time_and_date_of_post_split['1'], "+0000");
+$time_corrected                = date('H:i:s', strtotime('+330 minutes', strtotime($time))); // for time_zone : +5:30
+$time_and_date_of_post_correct = $date." ".$time_corrected;
+
+
+$fb_link_to_user ="https://www.facebook.com/".$message_from_id_outu;
+$fb_link_to_post ="https://www.facebook.com/".$comment_id_outu;
+
+$note_description         = "Post : ".$message_outu." , Posted On : ".$time_and_date_of_post_correct." , Link to Facebook Profile : ".$fb_link_to_user." , Link to Post : ".$fb_link_to_post;
+
+$parent_type        = "Leads";
+$parent_id          = $lead_id_c;
+$name               = "Facebook : ".$message_outu;
+$note_description   = $note_description;
+$assigned_user_name = "Sarah Dally";
+$assigned_user_id   ="746c64c4-6656-a101-3a6e-55d72a3e1628";
+$team_id            = "1";
+$post_data_in_fb    ="posted";
+
+    $note = new Note();
+ 
+    $note->name                  = $name;
+    $note->description           = $note_description;
+    $note->parent_type           = $parent_type;
+    $note->parent_id             = $parent_id;
+    $note->assigned_user_name    = $assigned_user_name;
+    $note->assigned_user_id      = $assigned_user_id;
+    $note->post_id_c             = $comment_id;
+    $note->comment_id_c          = $comment_id_outu;
+    $note->post_data_in_fb_c     = $post_data_in_fb;
+
+
+
+global $db;
+
+//$query8  = "SELECT id_c FROM notes_cstm, notes WHERE id = id_c AND deleted = 0 AND post_id_c = '$comment_id' and comment_id_c = '$comment_id_outu' ";
+
+$query8  = "SELECT id_c FROM notes_cstm, notes WHERE id = id_c AND post_id_c = '$comment_id' and comment_id_c = '$comment_id_outu' ";
+$value8  =   $db->query($query8);
+$check8  =   $get_values_row8  = $db->fetchByAssoc($value8);
+
+if(!$check8){
+if($message_from_name_outu !='Info Vision'  ){
+
+$note->save();
+echo '<b>Note created.</b>'; echo '<br>';
+
+}
+	
+}
+
+$user_details3= "https://graph.facebook.com/".$comment_id_outu."/comments?&method=GET&access_token=" .$access_token;
+$response3 = file_get_contents($user_details3);
+$response3= json_decode($response3);
+
+$data_outuu  = $response3->data;
+foreach($data_outuu as $data_outuu_comment){
+ 
+ $comment_id_outuu             = $data_outuu_comment->id;
+ $message_outuu                = $data_outuu_comment->message;
+ $message_from_name_outuu      = $data_outuu_comment->from->name;
+ $message_from_id_outuu        = $data_outuu_comment->from->id; 
+ $message_created_time_outuu   = $data_outuu_comment->created_time;
+
+$query90  =   "SELECT id_c FROM leads_cstm,leads WHERE id_c = id AND deleted = 0  AND posted_message_id_c = '$comment_id' ";
+$result90 =   $db->query($query90);
+$check90  =   $get_values_row90  = $db->fetchByAssoc($result90);
+
+$lead_id_c = $get_values_row90['id_c'];
+
+$time_and_date_of_post         = $message_created_time_outuu; // $Published_date	
+$time_and_date_of_post_split   = split("T", $time_and_date_of_post);
+$date                          = $time_and_date_of_post_split['0'];
+$time                          =  str_replace("+0000","",$time_and_date_of_post_split['1']);
+$time                          = rtrim($time_and_date_of_post_split['1'], "+0000");
+$time_corrected                = date('H:i:s', strtotime('+330 minutes', strtotime($time))); // for time_zone : +5:30
+$time_and_date_of_post_correct = $date." ".$time_corrected;
+
+
+$fb_link_to_user ="https://www.facebook.com/".$message_from_id_outuu;
+$fb_link_to_post ="https://www.facebook.com/".$comment_id_outuu;
+
+$note_description         = "Post : ".$message_outuu." , Posted On : ".$time_and_date_of_post_correct." , Link to Facebook Profile : ".$fb_link_to_user." , Link to Post : ".$fb_link_to_post;
+
+$parent_type        = "Leads";
+$parent_id          = $lead_id_c;
+$name               = "Facebook : ".$message_outuu;
+$note_description   = $note_description;
+$assigned_user_name = "Sarah Dally";
+$assigned_user_id   = "746c64c4-6656-a101-3a6e-55d72a3e1628";
+$team_id            = "1";
+$post_data_in_fb    = "posted";
+
+    $note2 = new Note();
+    $note2->name                  = $name;
+    $note2->description           = $note_description;
+    $note2->parent_type           = $parent_type;
+    $note2->parent_id             = $parent_id;
+    $note2->assigned_user_name    = $assigned_user_name;
+    $note2->assigned_user_id      = $assigned_user_id;
+    $note2->post_id_c             = $comment_id;
+    $note2->comment_id_c          = $comment_id_outu;
+    $note2->comment_reply_id_c    = $comment_id_outuu;
+    $note2->post_data_in_fb_c     = $post_data_in_fb;
+
+global $db;
+
+//$query80  = "SELECT id_c FROM notes_cstm, notes WHERE id = id_c AND deleted = 0 AND post_id_c = '$comment_id' and comment_reply_id_c = '$comment_id_outuu' and comment_id_c = '$comment_id_outu' ";
+
+$query80  = "SELECT id_c FROM notes_cstm, notes WHERE id = id_c AND post_id_c = '$comment_id' and comment_reply_id_c = '$comment_id_outuu' and comment_id_c = '$comment_id_outu' ";
+$value80  =   $db->query($query80);
+$check80  =   $get_values_row80  = $db->fetchByAssoc($value80);
+
+if(!$check80){
+if($message_from_name_outuu !='Info Vision' ){
+
+$note2->save();
+echo '<b>Note created.</b>'; echo '<br>';
+
+}
+	
+}
+
+}
+
+}
+
+//comment note content in fb post
+$query2  = "SELECT id_c FROM leads_cstm,leads WHERE id_c = id AND deleted = 0 AND posted_message_id_c = '$comment_id' ";
+$result2 = $db->query($query2);
+$check2  =   $get_values_row2  = $db->fetchByAssoc($result2);
+if(!$check2){
+
+}
+if($check2){
+
+$lead_record_id  = $get_values_row2['id_c'];
+
+$parent_type = 'Leads';
+$query8      = "SELECT id, name, description FROM notes, notes_cstm WHERE id=id_c AND parent_type ='$parent_type' AND parent_id ='$lead_record_id' AND post_data_in_fb_c !='posted' AND deleted = 0 ";
+$result8     = $db->query($query8);
+
+$comments = new stdClass;
+$comments->data = array();
+
+while($row8 = $db->fetchByAssoc($result8)){
+
+    $comment = new stdClass;
+    $comment->description = $row8['description'];
+    $comment->id = $row8['id'];
+    $comment->name = $row8['name'];
+    $comments->data[] = $comment;
+
+
+}
+
+
+$comments_data = $comments->data;
+
+echo "<pre>";
+print_r($comments_data);
+echo "</pre>";
+
+foreach($comments_data as $cd){
+echo $desci =  $cd->description;
+echo "<br>";
+}
+
+$comments_data0 = $comments_data[0];
+$comments_data1 = $comments_data[1];
+$desc1 = $comments_data0->description;
+$id1 = $comments_data0->id;
+$desc2 = $comments_data1->description;
+$id2 = $comments_data1->id;
+
+
+
+$desc1 = str_replace(' ', '+', $desc1);
+$desc2 = str_replace(' ', '+', $desc2);
+
+if($desc1 != ''){
+echo "desc1 :".$desc1;
+$user_details5 = "https://graph.facebook.com/".$comment_id."/comments?method=POST&message=".$desc1."&access_token=" .$access_token;
+$response5 = file_get_contents($user_details5);
+//$response5 = json_decode($response5);
+$query800      = "update notes, notes_cstm set post_data_in_fb_c ='posted' WHERE id=id_c AND  id_c ='$id1'  AND deleted = 0 ";
+$result800     = $db->query($query800);
+
+}
+if($desc2 != ''){
+echo "desc2 :".$desc2;
+$user_details6 = "https://graph.facebook.com/".$comment_id."/comments?method=POST&message=".$desc2."&access_token=" .$access_token;
+$response6 = file_get_contents($user_details6);
+//$response6 = json_decode($response6);
+$query800      = "update notes, notes_cstm set post_data_in_fb_c ='posted' WHERE id=id_c AND  id_c ='$id2'  AND deleted = 0 ";
+$result800     = $db->query($query800);
+}
+
+
+}
+
+
+} // lead if close
+
+
+
+echo '----------------------------------------------------------------------------------------------------------------------------------</br>';
+
+} // main foreach 
+
+
+
+
+echo "connected successfully";
+?>

@@ -1,0 +1,576 @@
+<?php
+/**************************
+Invoice PDF for LOP
+Author: Rathina Ganesh
+Date: 30th may 2017
+**************************/
+
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+ob_start();
+require_once('include/Sugarpdf/Sugarpdf.php');
+
+class AOS_InvoicesSugarpdfinvoice extends Sugarpdf
+{
+    /**
+     * Override
+     */
+    function process(){
+        $this->display();
+        $this->buildFileName();
+    }
+
+    /**
+     * Custom header
+     */
+    public function Header()
+    {
+    	
+    }
+
+    /**
+     * Custom header
+     */
+    public function Footer()
+    {
+        $this->SetFont(PDF_FONT_NAME_MAIN, '', 8);
+        $this->MultiCell(0,0,'TCPDF Footer', 0, 'C');
+    }
+
+ 
+    /**
+     * Main content
+     */
+    function display()
+    {
+        global $sugar_config;
+        $this->AddPage();
+        //add a display page
+        $image_file = K_PATH_IMAGES.'company_logo.png';
+        $this->Image($image_file, 30, 10, 45, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $headerData = <<<EOD
+          <table width="100%" border="0" cellspacing="1" cellpadding="1">
+          <tr><td align="center" style="font-size:35px"><b>ADMINISTRATIVE STAFF COLLEGE OF INDIA</b></td></tr>
+          <tr><td align="center" style="font-size:30px">Bella Vista, Hyderabad - 500 082, Telangana, India</td></tr>
+          <tr><td align="center" style="font-size:30px">Phone: 0091-040- 66533086, Tele. Fax: 0091-040- 23317237</td></tr>
+          <tr><td align="center" style="font-size:30px">e-mail: fo@asci.org.in</td></tr>
+          </table>
+EOD;
+        $this->writeHTML($headerData, true, false, false, false, '');
+        $this->SetFont(PDF_FONT_NAME_MAIN,'',PDF_FONT_SIZE_MAIN);
+        $this->Ln();
+
+        $record_id = $_REQUEST['record'];
+    	$invoice = BeanFactory::getBean('AOS_Invoices', $record_id);
+        $programme = $invoice->get_linked_beans('project_aos_invoices_1','AOS_Invoices');
+        $start_date_c = $programme[0]->start_date_c;
+        $end_date_c = $programme[0]->end_date_c; 
+        $duration = date('F d',strtotime($start_date_c))." - ".date('d',strtotime($end_date_c)).", ".date('Y',strtotime($start_date_c));
+    	$participantList = json_decode(html_entity_decode($invoice->participant_list_c));
+        $programme_type_c = $invoice->programme_type_c;        
+        // $sub = $invoice->name;
+        $number = $invoice->number;
+        $client_gst1_c = $invoice->client_gst1_c;
+        $ref = $invoice->description;
+        $invoice_date = $invoice->invoice_date;
+        $pan_c = $invoice->pan_c;
+        $regd_no_c = $invoice->regd_no_c;
+        $category_c = $invoice->category_c;
+        $currency_id = $invoice->currency_id;
+        $billing_account = $invoice->billing_account;
+        $billing_address_street = $invoice->billing_address_street;
+        $billing_address_city = $invoice->billing_address_city;
+        $billing_address_state = $invoice->billing_address_state;
+        $billing_address_country = $invoice->billing_address_country;
+        $billing_address_postalcode = $invoice->billing_address_postalcode;
+        $kind_attention_c = $invoice->kind_attention_c;
+        $no_of_participants_c = $invoice->no_of_participants_c;
+        $programme_fee_c = number_format($invoice->programme_fee_c,2);
+        $project_aos_invoices_1_name = $invoice->project_aos_invoices_1_name;
+        $total_amt = number_format($invoice->total_amt,2);
+        $tax_amount = number_format($invoice->tax_amount,2);
+        $total_amount = number_format($invoice->total_amount,2);
+        $cgst = number_format($invoice->cgst_c,2);
+        $sgst = number_format($invoice->sgst_c,2);
+    	$igst = number_format($invoice->igst_c,2);
+        // $this->SetFont(PDF_FONT_NAME_MAIN, '', 12);
+        $f = new NumberFormatter("en", NumberFormatter::SPELLOUT);
+        $amountInWords = ucwords($f->format($invoice->total_amount));
+
+        //check for igst 
+        //if the state is same then igst should be 0 otherwise igst = cgst + sgst 
+        //and cgst = sgst = 0
+        if (strpos($billing_address_state, 'Telangana') !== false) {
+            $igst = '';
+            $igst_rate = '';
+            $cgst_rate = 9;
+            $sgst_rate = 9;
+        }else{
+            $cgst = '';
+            $sgst = '';
+            $igst_rate = 18;
+            $cgst_rate = '';
+            $sgst_rate = '';
+        }
+
+        if($currency_id == "-99"){
+            $currency_name = 'Rs.&nbsp;';
+            $currency_word = 'Rupees';
+            $bankDetailsGenerate = '';
+            foreach ($sugar_config['bank']['inr'] as $key => $value) {
+                $bankDetailsGenerate .= "<tr>";
+                $bankDetailsGenerate .= "<td>";
+                $bankDetailsGenerate .= $key;
+                $bankDetailsGenerate .= "</td>";
+                $bankDetailsGenerate .= "<td>";
+                $bankDetailsGenerate .= $value;
+                $bankDetailsGenerate .= "</td>";
+                $bankDetailsGenerate .= "</tr>";
+            }
+            $bankDetails = ' <table width="100%" border="0" style="font-size:30px" cellpadding="0">
+            <tr>
+                <td>
+                    We will be grateful if you could send the payment to the undersigned, favoring "<b>ADMINISTRATIVE STAFF COLLEGE OF INDIA</b>" payable at Hyderabad or alternatively you could remit the payment by Direct Transfer to our Bank account as detailed below, at the earliest under intimation to us.
+                </td>
+            </tr>
+        </table>
+        <table width="100%" border="1" style="font-size:30px" cellpadding="1">
+            <tr>
+                <td colspan="2" align="center">
+                    <b>B A N K D E T A I L S</b>
+                </td>
+            </tr>
+            '.$bankDetailsGenerate.'
+
+        </table>
+        <table width="100%" border="0" style="font-size:30px" cellpadding="0">
+            <tr>
+                <td align="left">
+                    Thanking you,
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    Yours sincerely,
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    for Administrative Staff College of India
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <b>'.$sugar_config['bank']['signature']['invoice'].'</b>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <b>Finance Officer</b>
+                </td>
+            </tr>
+        </table>
+        <table width="100%" border="0" style="font-size:30px" cellpadding="1">
+            <tr>
+                <td colspan="1">
+                    <b><u>Note:</u></b>
+                </td>
+                <td colspan="9" align="justify">
+                    1. It is mandatory to mention our Invoice No and your Organisation name while remitting the fee through bank transfer / wire transfer.
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                </td>
+                <td colspan="9" align="justify">
+                    2. Please intimate through a mail, while making payment to fo@asci.org.in with bank transaction I D.
+                </td>
+            </tr>
+        </table>';
+        }
+        else if($currency_id == "5d3103c2-4a19-b7bf-75da-592586ee4aec"){
+            $currency_name = 'US $&nbsp;';
+            $currency_word = 'US Dollars';
+            $bankDetailsGenerate = '';
+            foreach ($sugar_config['bank']['usd'] as $key => $value) {
+                $bankDetailsGenerate .= "<tr>";
+                if (strpos($key,'Correspondent Bank') !== false && strpos($key,'Chips') === false && strpos($key,'Fedwire') === false) {
+                    $bankDetailsGenerate .= '<td rowspan="3">';
+                    $bankDetailsGenerate .= $key;
+                    $bankDetailsGenerate .= '</td>';
+                }else{
+                    if (strpos($key,'Correspondent Bank') === false){
+                        $bankDetailsGenerate .= '<td>';
+                        $bankDetailsGenerate .= $key;
+                        $bankDetailsGenerate .= '</td>';  
+                    }
+                }
+
+                $bankDetailsGenerate .= '<td>';
+                $bankDetailsGenerate .= $value;
+                $bankDetailsGenerate .= '</td>';
+                $bankDetailsGenerate .= '</tr>';
+            }
+
+            $bankDetails = ' <table width="100%" border="0" style="font-size:30px" cellpadding="0">
+            <tr>
+                <td>
+                    We will be grateful if you could remit the payment by Wire Transfer to our account as detailed below, at the earliest.
+                </td>
+            </tr>
+        </table>
+        <table width="100%" border="1" style="font-size:30px" cellpadding="1">
+        '.$bankDetailsGenerate.'
+            
+
+        </table>
+        <table width="100%" border="0" style="font-size:30px" cellpadding="0">
+            <tr>
+                <td align="left">
+                    Thanking you,
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    Yours sincerely,
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    for Administrative Staff College of India
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <b>'.$sugar_config['bank']['signature']['invoice'].'</b>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <b>Finance Officer</b>
+                </td>
+            </tr>
+        </table>';
+        }
+
+        if($programme_type_c == 'Announced'){
+            $lops = '';
+            $slno = 1;
+            foreach($participantList as $participant){
+                $lops .= "<tr><td></td><td align=\"justify\" colspan=\"3\">".$slno.". ".$participant->name."</td><td></td></tr>";
+                $slno++;
+            } 
+            $lops .= '';
+            $sub = "Training Programme on ".$project_aos_invoices_1_name." held during ".$duration;
+            $content = 'Fee in respect of the following:';
+        }else{
+            $sub = "Training Programme on ".$project_aos_invoices_1_name." held during ".$duration;
+            $content = 'Fee for the training programme on "'.$project_aos_invoices_1_name.'" held during '.$duration;
+            $lops = "<tr><td></td><td align=\"justify\" colspan=\"3\">Fee @ $currency_name $programme_fee_c /- pp -- for $no_of_participants_c participants</td><td></td></tr>";
+        }
+
+        $invoice_data = <<<EOD
+        <b align="center" style="font-size:30px">T A X  I N V O I C E</b><br>
+		<table width="100%" border="1" style="font-size:30px" cellpadding="2">
+            <tr>
+                <td>
+                    <table width="100%" border="0" style="font-size:30px" cellpadding="0">
+                        <tr>
+                            <td>
+                               GSTIN Number: <b>$regd_no_c</b>
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>
+                               Tax is Payable on Reverse Charge: <b>Yes/No</b>
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>
+                               Invoice No: <b>$number</b>
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>
+                               Invoice Date: <b>$invoice_date</b>
+                            </td> 
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table width="100%" border="0" style="font-size:30px" cellpadding="0">
+                        <tr>
+                            <td>
+                               PAN: <b>$pan_c</b>
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>
+                               State/Code : <b>Telangana 136</b>
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>
+                               CATEGORY : <b>Commercial Training & Coaching</b>
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>
+                               SAC Code : <b>999293</b>
+                            </td> 
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <b>Details of Receiver (Billed to)</b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table width="100%" border="0" style="font-size:30px" cellpadding="0">
+                        <tr>
+                            <td>
+                               To: 
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>
+                               <b>$billing_account</b>
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>
+                               <b>$billing_address_street</b>
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>
+                               <b>$billing_address_city</b>
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>
+                               <b>$billing_address_state</b> 
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>
+                               <b>$billing_address_country - $billing_address_postalcode</b> 
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>
+                                
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>
+                               <b><u>Kind.Attn:</u> &nbsp;&nbsp;$kind_attention_c</b> 
+                            </td> 
+                        </tr>
+                    </table>
+                </td> 
+                <td>
+                    <table width="100%" border="0" style="font-size:30px" cellpadding="0">
+                        <tr>
+                            <td>
+                               State/Code : <b>$billing_address_state</b>
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>
+                               GSTIN Number: <b>$client_gst1_c</b>
+                            </td> 
+                        </tr>
+                    </table>
+                </td>
+            </tr> 
+            <tr>
+                <td colspan="2">
+                    Sub: $sub
+                </td> 
+            </tr>
+        </table>
+
+        <table width="100%" border="1" style="font-size:30px" cellpadding="0">
+            <tr>
+                <td colspan="3" align="center">
+                    <b>P A R T I C U L A R S</b>
+                </td>
+                <td colspan="1"  align="center">
+                    A M O U N T
+                </td>
+            </tr>
+             <tr>
+                <td colspan="3">
+                    <table width="100%" border="0" style="font-size:30px" cellpadding="0">
+                        <tr>
+                            <td>
+                               
+                            </td>
+                            <td colspan="3">
+                               
+                            </td> 
+                            <td>
+                               
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>
+                               
+                            </td>
+                            <td align="justify" colspan="3">
+                               $content
+                            </td> 
+                            <td>
+                               
+                            </td> 
+                        </tr>
+                        $lops
+                        <tr>
+                            <td>
+                               
+                            </td>
+                            <td colspan="3">
+                               
+                            </td> 
+                            <td>
+                               
+                            </td> 
+                        </tr>
+                    </table>
+                </td>
+                <td colspan="1"  align="center">
+                    <table width="100%" border="0" style="font-size:30px" cellpadding="0">
+                        <tr>
+                            <td>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                $total_amt
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+             <tr>
+                <td colspan="3">
+                    <table width="100%" border="1" style="font-size:30px" cellpadding="0">
+                        <tr>
+                            <td>Tax Description</td>
+                            <td>Tax Rate %</td>
+                            <td>Tax Amount</td>
+                        </tr>
+                        <tr>
+                            <td>
+                               Central GST (CGST)
+                            </td>
+                            <td>
+                               $cgst_rate
+                            </td>
+                            <td>
+                               $cgst
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                               State GST (SGST)
+                            </td>
+                            <td>
+                               $sgst_rate
+                            </td>
+                            <td>
+                               $sgst
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                               Integrated GST (IGST)
+                            </td>
+                            <td>
+                                $igst_rate
+                            </td>
+                            <td>
+                               $igst
+                            </td>
+                        </tr>
+
+                    </table>
+                </td>
+                <td colspan="1"  align="center">
+                     <table width="100%" border="0" style="font-size:30px" cellpadding="0">
+                        <tr>
+                            <td>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                $tax_amount
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" align="right">
+                    Total $currency_name
+                </td>
+                <td colspan="1" align="center">
+                    $total_amount
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" align="justify">
+                    Total Amount in Words <b>($currency_word &nbsp;$amountInWords Only)</b>
+                </td>
+            </tr>
+        </table>
+       $bankDetails
+        
+        
+       
+EOD;
+		$this->writeHTML($invoice_data, true, false, false, false, '');
+    }
+
+    /**
+     * Build filename
+     */
+    function buildFileName()
+    {
+        $this->fileName = 'example.pdf';
+    }
+
+    /**
+     * This method draw an horizontal line with a specific style.
+     */
+    protected function drawLine()
+    {
+        $this->SetLineStyle(array('width' => 0.85 / $this->getScaleFactor(), 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(220, 220, 220)));
+        $this->MultiCell(0, 0, '', 'T', 0, 'C');
+    }
+}

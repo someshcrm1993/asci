@@ -1,0 +1,133 @@
+
+
+Scheduler Result at 2016-Apr-21 10:04:17 :- CRON Run Successful!-14 
+
+Scheduler Result at 2016-Apr-21 10:04:17 :- Level 1 - Reports to user - 8efdd8c6-b63c-7ad4-b356-56e69d8cabf0
+
+Scheduler Result at 2016-Apr-21 10:04:17 :- Level 1- Assigned user emails and name :Sam Clark-sam@example.com !
+
+Scheduler Result at 2016-Apr-21 10:04:17 :- Email Status - SUCCESS
+
+Scheduler Result at 2016-Apr-21 11:04:20 :- CRON Run Successful!-14 
+
+Scheduler Result at 2016-Apr-21 11:04:20 :- Level 1 - Reports to user - 8efdd8c6-b63c-7ad4-b356-56e69d8cabf0
+
+Scheduler Result at 2016-Apr-21 11:04:20 :- Level 1- Assigned user emails and name :Sam Clark-sam@example.com !
+
+Scheduler Result at 2016-Apr-21 11:04:20 :- Email Status - SUCCESS
+
+Scheduler Result at 2016-Apr-21 11:04:05 :- CRON Run Successful!- 29
+
+Scheduler Result at 2016-Apr-21 11:04:05 :- Level 2 - Reports to user - 
+
+Scheduler Result at 2016-Apr-21 11:04:05 :- Level 2- Assigned user emails and name : - !
+
+Scheduler Result at 2016-Apr-21 11:04:05 :- Email Status - FAIL
+
+Scheduler Result at 2016-Apr-21 11:04:15 :- CRON Run Successful!- 29
+
+Scheduler Result at 2016-Apr-21 11:04:15 :- Level 2 - Reports to user - 
+
+Scheduler Result at 2016-Apr-21 11:04:15 :- Level 2- Assigned user emails and name : - !
+
+Scheduler Result at 2016-Apr-21 11:04:15 :- Email Status - FAIL
+
+Scheduler Result at 2016-Apr-21 11:04:21 :- CRON Run Successful! - 59
+
+Scheduler Result at 2016-Apr-21 11:04:21 :- Level 3- Assigned user emails and name : - !
+
+Scheduler Result at 2016-Apr-21 11:04:21 :- Email Status - FAIL
+
+Scheduler Result at 2016-Apr-21 11:04:12 :- CRON Run Successful!-14 
+
+Scheduler Result at 2016-Apr-21 11:04:12 :- Level 1 - Reports to user - 8efdd8c6-b63c-7ad4-b356-56e69d8cabf0
+
+Scheduler Result at 2016-Apr-21 11:04:12 :- Level 1- Assigned user emails and name :Sam Clark-sam@example.com !
+
+Scheduler Result at 2016-Apr-21 11:04:12 :- Email Status - SUCCESS
+
+Scheduler Result at 2016-Apr-21 11:04:05 :- CRON Run Successful! - 59
+
+Scheduler Result at 2016-Apr-21 11:04:05 :- Level 3- Assigned user emails and name : - !
+
+Scheduler Result at 2016-Apr-21 11:04:05 :- Email Status - FAIL
+
+Scheduler Result at 2016-Apr-21 11:04:05 :- CRON Run Successful!-14 
+
+Scheduler Result at 2016-Apr-21 11:04:05 :- Level 1 - Reports to user - 8efdd8c6-b63c-7ad4-b356-56e69d8cabf0
+
+Scheduler Result at 2016-Apr-21 11:04:05 :- Level 1- Assigned user emails and name :Sam Clark-sam@example.com !
+
+Scheduler Result at 2016-Apr-21 11:04:05 :- Email Status - SUCCESS
+
+Scheduler Result at 2016-Apr-21 11:04:06 :- CRON Run Successful!-14 
+
+Scheduler Result at 2016-Apr-21 11:04:06 :- Level 1 - Reports to user - b0dba3e8-c116-2208-fa09-55df0a70be09
+
+Scheduler Result at 2016-Apr-21 11:04:06 :- Level 1- Assigned user emails and name :Jim Hay-mangesh@simplecrm.com.sg !
+
+Scheduler Result at 2016-Apr-21 11:04:06 :- Email Status - SUCCESS
+
+Scheduler Result at 2016-Apr-21 11:04:08 :- CRON Run Successful!- 29
+
+Scheduler Result at 2016-Apr-21 11:04:08 :- Level 2 - Reports to user - 
+
+Scheduler Result at 2016-Apr-21 11:04:08 :- Level 2- Assigned user emails and name : - !
+
+Scheduler Result at 2016-Apr-21 11:04:08 :- Email Status - FAIL
+
+Scheduler Result at 2016-Apr-21 12:04:21 :- CRON Run Successful!- 29
+
+Scheduler Result at 2016-Apr-21 12:04:21 :- Level 2 - Reports to user - 
+
+Scheduler Result at 2016-Apr-21 12:04:21 :- Level 2- Assigned user emails and name : - !
+
+Scheduler Result at 2016-Apr-21 12:04:21 :- Email Status - FAIL
+
+Scheduler Result at 2016-Apr-21 12:04:18 :- CRON Run Successful!-14 
+
+Scheduler Result at 2016-Apr-21 12:04:18 :- Level 1 - Reports to user - b0dba3e8-c116-2208-fa09-55df0a70be09
+
+Scheduler Result at 2016-Apr-21 12:04:18 :- Level 1- Assigned user emails and name :Jim Hay-mangesh@simplecrm.com.sg !
+
+Scheduler Result at 2016-Apr-21 12:04:18 :- Email Status - SUCCESS
+
+Scheduler Result at 2016-Apr-21 12:04:19 :- CRON Run Successful!- 29
+
+Scheduler Result at 2016-Apr-21 12:04:19 :- Level 2 - Reports to user - 8efdd8c6-b63c-7ad4-b356-56e69d8cabf0
+
+Scheduler Result at 2016-Apr-21 12:04:19 :- Level 2- Assigned user emails and name :Sam Clark-sam@example.com !
+
+Scheduler Result at 2016-Apr-21 12:04:19 :- Email Status - SUCCESS
+
+Scheduler Result at 2016-Apr-21 12:04:13 :- CRON Run Successful!- 29
+
+Scheduler Result at 2016-Apr-21 12:04:13 :- Level 2 - Reports to user - 8efdd8c6-b63c-7ad4-b356-56e69d8cabf0
+
+Scheduler Result at 2016-Apr-21 12:04:13 :- Level 2- Assigned user emails and name :Sam Clark-sam@example.com !
+
+Scheduler Result at 2016-Apr-21 12:04:13 :- Email Status - SUCCESS
+
+Scheduler Result at 2016-Apr-21 12:04:20 :- CRON Run Successful! - 59
+
+Scheduler Result at 2016-Apr-21 12:04:20 :- Level 3- Assigned user emails and name : - !
+
+Scheduler Result at 2016-Apr-21 12:04:20 :- Email Status - FAIL
+
+Scheduler Result at 2016-Apr-21 12:04:07 :- CRON Run Successful! - 59
+
+Scheduler Result at 2016-Apr-21 12:04:07 :- Level 3- Assigned user emails and name : - !
+
+Scheduler Result at 2016-Apr-21 12:04:07 :- Email Status - FAIL
+
+Scheduler Result at 2016-Apr-21 12:04:19 :- CRON Run Successful! - 59
+
+Scheduler Result at 2016-Apr-21 12:04:19 :- Level 3- Assigned user emails and name : -sam@example.com !
+
+Scheduler Result at 2016-Apr-21 12:04:19 :- Email Status - SUCCESS
+
+Scheduler Result at 2016-Apr-21 12:04:17 :- CRON Run Successful! - 59
+
+Scheduler Result at 2016-Apr-21 12:04:17 :- Level 3- Assigned user emails and name : -sam@example.com !
+
+Scheduler Result at 2016-Apr-21 12:04:17 :- Email Status - SUCCESS

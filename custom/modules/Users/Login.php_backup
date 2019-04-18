@@ -1,0 +1,2051 @@
+ <html>
+	<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="rest.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+<style>
+  body {font-size:12px;}
+  .suga {width: 200px; margin: 20px auto;}
+  .thumbnail {background: #fff; padding-right: 20px;}
+  h4 {font-weight: 600; font-size: 12px; margin: 10px 0 0;}
+  #content {top: 0; overflow: auto;}
+  .thumbnail img {border-radius: 100px; border: 1px solid #ddd;}
+  .intro {margin: 0 20px; display: block;}
+  a {cursor: pointer;}
+.row-fluid .span4 {width: 96.914894%;}
+.tcenter {text-align: center !important;}
+.row-fluid [class*="span"]:first-child {
+    margin-left: 0;
+}
+img{cursor:pointer;}
+.custom-container{
+    margin-left: 230px;
+    width: 261px;}
+.e{font-weight: 600; font-size: 13px; margin: 10px 0 0 58px;}
+.e2{font-weight: 600; font-size: 13px; margin-right: 139px;}
+p{margin-left:11px;}
+.row-fluid {
+    margin-left: 0px;
+}
+.separator {
+                clear: both;
+                width: 884px;
+                align:center;
+                height:315px;
+                border: 1px solid #337ab7;
+                margin-left:180px;
+                -moz-box-shadow: 0 0 5px 5px #dddddd;
+    -webkit-box-shadow: 0 0 5px 5px#dddddd;
+    box-shadow: 0 0 5px 5px #dddddd;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+            }
+            
+/* Custom code */
+
+.heading {
+    text-align: left;
+    margin-top: 18px;
+}
+.horizontal-bar {
+    background-color: #2382d5;
+    width: 77.5%;
+    color: #fff;
+    height: 54px;
+    text-align: center;
+    font-size: 15px;
+    line-height: 53px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    /* box-shadow: 0 0 4px 2px #dddddd; */
+    margin: -49px 0px 25px 294px;
+    font-weight: 600;
+}
+img#pri-mainlogo {
+    float: left;
+    padding-left: 7px;
+}
+img.pull-left {
+    border-radius: 100px;
+    border: 1px solid #ddd;
+}
+.vertical-bar {
+width: 23%;
+height: 542px;
+background-color: #181616;
+/*margin-left: 0px;*/
+position: relative;
+float: left;
+margin-top: -26px;
+}
+.vertcal-bar-content {
+    position: absolute;
+    bottom: 196px;
+    left: 106px;
+    color: #fff;
+    /* margin: 0 0px 0 89px; */
+    font-size: 14px;
+    font-weight: 600;
+    /*margin-bottom:37px;*/
+}
+
+.tree li p {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1.1em;
+    margin: 0 5px 11px 5px;
+    color: #333;
+    width: 282px;
+}
+.tree ul {
+	padding-top: 13px; position: relative;
+	
+	transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+}
+
+.tree li {
+	float: left; text-align: center;
+	list-style-type: none;
+	position: relative;
+	padding: 20px 5px 0 5px;
+	
+	transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	 margin-left: -25px;
+}
+img#clark {
+    margin-top: -22px;
+}
+img#sarah, img#manish {
+    margin-top: -8px;
+}
+
+/*We will use ::before and ::after to draw the connectors*/
+
+.tree li::before, .tree li::after{
+	content: '';
+	position: absolute; top: 0; right: 50%;
+	border-top: 2px dashed #2382d5;
+	width: 50%; height: 20px;
+}
+.tree li::after{
+	right: auto; left: 50%;
+	border-left: 2px dashed #2382d5;
+}
+
+/*We need to remove left-right connectors from elements without 
+any siblings*/
+.tree li:only-child::after, .tree li:only-child::before {
+	display: none;
+}
+
+/*Remove space from the top of single children*/
+.tree li:only-child{ padding-top: 0;}
+
+/*Remove left connector from first child and 
+right connector from last child*/
+.tree li:first-child::before, .tree li:last-child::after{
+	border: 0 none;
+}
+/*Adding back the vertical connector to the last nodes*/
+.tree li:last-child::before{
+	border-right: 2px dashed #2382d5;
+	border-radius: 0 5px 0 0;
+	-webkit-border-radius: 0 5px 0 0;
+	-moz-border-radius: 0 5px 0 0;
+}
+.tree li:first-child::after{
+	border-radius: 5px 0 0 0;
+	-webkit-border-radius: 5px 0 0 0;
+	-moz-border-radius: 5px 0 0 0;
+}
+
+/*Time to add downward connectors from parents*/
+.tree ul ul::before{
+	content: '';
+	position: absolute; top: -13px; 
+	left: 50.8%;
+	border-left: 2px dashed #2382d5;
+	width: 0; height: 20px;
+}
+
+.tree li a{
+	/*border: 1px solid #ccc;*/
+	padding: 5px 10px;
+	text-decoration: none;
+	color: #666;
+	/*font-family: arial, verdana, tahoma;*/
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	display: inline-block;
+	
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	
+	transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+}
+img#clark, img#adrian, img#philip, img#jim, img#sarah, img#manish {
+    float: none !important;
+}
+
+/* Media Queries for Responsiveness */
+
+@media (max-width:240px) {
+	img#pri-mainlogo {
+		float: none !important;
+		margin: -62px 0 0 -12px;
+	}
+	.horizontal-bar {
+		width: 139% !important;
+		margin: -6px 0px 25px -30px !important;
+		font-size: 9px;
+		font-weight: 400;
+	}
+	.vertical-bar {
+		width: 100% !important;
+		height: 255px !important;
+		order: 2;
+		margin: 15px auto;
+	}
+	.hierarchy-content {
+		margin-left: -78px !important;
+	}
+	.tree li {
+		margin-left: -35px !important;
+	}
+	.tree li p {
+		width: 178px;
+	}
+	p.sam-direc {
+		width: 200px !important;
+	}
+	a#data-sls {
+		margin: -31px 0 0 20px;
+	}
+	a#list-frmt {
+		margin-left: 22px;
+    }
+    a#sales-rpr {
+		margin: -6px 0 0 12px;
+	}
+	a#mkng-mgr {
+		margin: -18px 0 0 25px;
+	}
+	a#vp-sprt {
+		margin: -15px 0 0 22px;
+	}
+	a#list-data-csr {
+		margin: -3px 0 0 6px;
+	}
+}
+@media (min-width:241px) and (max-width: 320px){
+	.tree li {
+		margin-left: -33px !important;
+	}
+	.horizontal-bar {
+		width: 123% !important;
+		margin: 6px 0px 25px -28px !important;
+		font-size: 12px;
+	}
+	p.sam-direc {
+		width: 290px !important;
+	}
+	.tree li p {
+		width: 246px !important;
+	}
+	.vertical-bar {
+		width: 90% !important;
+	}
+	a#data-sls {
+		margin: -31px 0 0 20px;
+	}
+	a#list-frmt {
+		margin-left: 22px;
+    }
+    a#sales-rpr {
+		margin: -6px 0 0 10px;
+	}
+	a#mkng-mgr {
+		margin: -18px 0 0 25px;
+	}
+	a#vp-sprt {
+		margin: -15px 0 0 22px;
+	}
+	a#list-data-csr {
+		margin: -3px 0 0 6px;
+	}
+}
+@media (min-width:321px) and (max-width: 375px){
+	.horizontal-bar {
+		width: 115% !important;
+		margin: 6px 0px 25px -17px !important;
+		font-size: 13px;
+	}
+	.tree li {
+		margin-left: -32px !important;
+	}
+	a#data-sls {
+		margin: -31px 0 0 20px;
+	}
+	a#list-frmt {
+		margin-left: 30px;
+    }
+    a#sales-rpr {
+		margin: -6px 0 0 10px;
+	}
+	a#mkng-mgr {
+		margin: -18px 0 0 25px;
+	}
+	a#vp-sprt {
+		margin: -15px 0 0 22px;
+	}
+	a#list-data-csr {
+		margin: -3px 0 0 6px;
+	}
+}
+@media (min-width:376px) and (max-width: 384px){
+	.horizontal-bar {
+		width: 116% !important;
+		margin: 6px 0px 25px -24px !important;
+		font-size: 13.5px;
+	}
+	.tree li {
+		margin-left: -35px !important;
+	}
+	a#data-sls {
+		margin: -31px 0 0 29px;
+	}
+	a#list-frmt {
+		margin-left: 30px;
+    }
+    a#sales-rpr {
+		margin: -6px 0 0 14px;
+	}
+	a#mkng-mgr {
+		margin: -18px 0 0 25px;
+	}
+	a#vp-sprt {
+		margin: -15px 0 0 16px;
+	}
+	a#list-data-csr {
+		margin: -3px 0 0 7px;
+	}
+}
+@media (min-width:385px) and (max-width: 414px){
+	.horizontal-bar {
+		width: 111% !important;
+		margin: 6px 0px 25px -11px !important;
+	}
+	.tree li {
+		margin-left: -26px !important;
+	}
+	a#data-sls {
+		margin: -31px 0 0 20px;
+	}
+	a#list-frmt {
+		margin-left: 30px;
+    }
+    a#sales-rpr {
+		margin: -6px 0 0 10px;
+	}
+	a#mkng-mgr {
+		margin: -18px 0 0 25px;
+	}
+	a#vp-sprt {
+		margin: -15px 0 0 22px;
+	}
+	a#list-data-csr {
+		margin: -3px 0 0 6px;
+	}
+}
+@media (min-width:415px) and (max-width: 480px){
+	.horizontal-bar {
+		width: 107% !important;
+		margin: 6px 0px 25px -8px !important;
+	}
+	a#data-sls {
+		margin: -31px 0 0 56px;
+	}
+	a#sales-rpr {
+		margin: -6px 0 0 36px;
+	}
+	a#mkng-mgr {
+		margin: -18px 0 0 56px;
+	}
+	a#vp-sprt {
+		margin: -15px 0 0 58px;
+	}
+	a#list-data-csr {
+		margin: -3px 0 0 33px;
+	}
+	.tree li {
+		margin-left: -20px;
+	}
+}
+@media (min-width:415px) and (max-width: 458px){
+	a#list-frmt {
+		margin-left: 62px;
+    }
+}
+@media (min-width:459px) and (max-width: 469px){
+	a#list-frmt {
+		margin-left: 47px;
+    }
+}
+@media (min-width:470px) and (max-width: 480px){
+	a#list-frmt {
+		margin-left: 40px;
+    }
+}
+@media (min-width:481px) and (max-width: 500px){
+	.hierarchy-content {
+		margin-left: -18px;
+	}
+	.horizontal-bar {
+		width: 107% !important;
+		margin: 6px 0px 25px -8px !important;
+	}
+	a#list-frmt {
+		margin-left: 22px;
+	}
+	a#data-sls {
+		margin: -31px 0 0 45px;
+	}
+	a#sales-rpr {
+		margin: -6px 0 0 36px;
+	}
+	a#mkng-mgr {
+		margin: -18px 0 0 47px;
+	}
+	a#vp-sprt {
+		margin: -15px 0 0 44px;
+	}
+	a#list-data-csr {
+		margin: -3px 0 0 33px;
+	}
+	.tree li {
+		margin-left: -36px;
+	}
+}
+@media (min-width:481px) and (max-width: 767px){
+	img.primary-logo {
+		width: 242px;
+	}
+}
+@media (min-width:481px) and (max-width: 567px){
+	.vertical-bar {
+		width: 56%;
+	}
+}
+@media (min-width:568px) and (max-width: 767px){
+	.vertical-bar {
+		width: 46%;
+	}
+}
+@media (min-width:600px) and (max-width: 675px){
+	.hierarchy-content {
+		margin-left: -43px;
+	}
+	img.primary-logo {
+		margin-left: -8px;
+	}
+}
+@media (min-width:676px) and (max-width: 767px){
+	.hierarchy-content {
+		margin-left: -52px;
+	}
+	img.primary-logo {
+		margin-left: -8px;
+	}
+}
+@media (min-width:501px) and (max-width: 524px){
+	a#list-frmt {
+		margin-left: 88px;
+	}
+}
+@media (min-width:525px) and (max-width: 567px){
+	a#list-frmt {
+		margin-left: 55px;
+	}
+}
+@media (min-width:501px) and (max-width: 567px){
+	.hierarchy-content {
+		margin-left: -73px;
+	}
+	a#data-sls {
+		margin: -31px 0 0 99px;
+	}
+	a#sales-rpr {
+		margin: -6px 0 0 69px;
+	}
+	a#mkng-mgr {
+		margin: -18px 0 0 95px;
+	}
+	a#vp-sprt {
+		margin: -15px 0 0 96px;
+	}
+	a#list-data-csr {
+		margin: -3px 0 0 66px;
+	}
+	.tree li {
+		margin-left: -20px;
+	}
+}
+@media (min-width:568px) and (max-width: 599px){
+	.hierarchy-content {
+		margin-left: -52px;
+	}
+	a#list-frmt {
+		margin-left: 33px;
+	}
+	a#data-sls {
+		margin: -31px 0 0 99px;
+	}
+	a#sales-rpr {
+		margin: -6px 0 0 69px;
+	}
+	a#mkng-mgr {
+		margin: -18px 0 0 95px;
+	}
+	a#vp-sprt {
+		margin: -15px 0 0 96px;
+	}
+	a#list-data-csr {
+		margin: -3px 0 0 66px;
+	}
+	.tree li {
+		margin-left: -20px;
+	}
+}
+@media (min-width:600px) and (max-width: 639px){
+	a#data-sls {
+		margin: -31px 0 0 99px;
+	}
+	a#sales-rpr {
+		margin: -6px 0 0 69px;
+	}
+	a#mkng-mgr {
+		margin: -18px 0 0 95px;
+	}
+	a#vp-sprt {
+		margin: -15px 0 0 96px;
+	}
+	a#list-data-csr {
+		margin: -3px 0 0 66px;
+	}
+	.tree li {
+		margin-left: -20px;
+	}
+}
+@media (min-width:640px) and (max-width: 652px){
+	.tree li p {
+		width: 125px;
+	}
+}
+@media (min-width:653px) and (max-width: 675px){
+	.tree li p {
+		width: 140px;
+	}
+}
+@media (min-width:676px) and (max-width: 700px){
+	.tree li p {
+		width: 152px;
+	}
+}
+@media (min-width:701px) and (max-width: 735px){
+	.tree li p {
+		width: 164px;
+	}
+}
+@media (min-width:736px) and (max-width: 767px){
+	.tree li p {
+		width: 182px;
+	}
+	.horizontal-bar {	
+		width: 64.3%;
+		margin: -49px 0px 25px 250px;
+	}
+}
+@media (min-width:321px) and (max-width: 480px){
+	.vertical-bar {
+		width: 100% !important;
+	}
+}
+@media (min-width:241px) and (max-width: 480px){
+	img#pri-mainlogo {
+		float: none !important;
+		margin: -62px auto 0 auto;
+	}
+	.hierarchy-content {
+		margin-left: -70px !important;
+	}
+}
+@media (max-width:639px) {
+	.tree li::before, .tree li::after, .tree li::after, .tree li:last-child::before, .tree ul ul::before {
+		display: none !important;
+	}
+}
+@media (min-width: 481px) and (max-width: 735px){
+	.heading {
+		text-align: center;
+    }
+    img#pri-mainlogo {
+		float: none !important;
+		margin: -62px auto 0 auto !important;
+    }
+    .horizontal-bar {
+		width: 104.5%;
+		margin: 3px 0px 25px -6px;
+	}
+}
+/*
+@media (min-width: 481px) and (max-width: 991px){
+	.vertical-bar {
+		width: 50% !important;
+	}
+	.tree li p {
+		width: 216px;
+	}
+	.hierarchy-content {
+		margin-left: -70px !important;
+	}
+}
+*/
+@media (max-width: 991px) {
+	.vertcal-bar-content {
+		left: 68px;
+	}
+	.demo-container {
+		display: flex;
+		flex-wrap: wrap;
+	}
+	.vertical-bar {
+		height: 255px !important;
+		order: 2;
+		margin: 15px auto;
+	}
+}
+@media (min-width:768px) and (max-width:812px) { 
+	img#pri-mainlogo {
+		margin-left: -6px !important;
+		width: 225px !important;
+	}
+	.horizontal-bar {
+		width: 68.5%;
+		margin: -49px 0px 25px 240px;
+	}
+	.hierarchy-content {
+		margin-left: -54px !important;
+	}
+	.tree li p {
+		width: 195px;
+	}
+}
+@media (min-width:813px) and (max-width:845px) { 
+	img#pri-mainlogo {
+		margin-left: -6px !important;
+		width: 222px !important;
+	}
+	.horizontal-bar {
+		width: 70.9%;
+		margin: -49px 0px 25px 240px;
+	}
+	.hierarchy-content {
+		margin-left: -70px !important;
+	}
+	.tree li p {
+		width: 205px;
+	}
+}
+@media (min-width:846px) and (max-width:871px) { 
+	img#pri-mainlogo {
+		margin-left: -6px !important;
+		width: 225px !important;
+	}
+	.horizontal-bar {
+		width: 71.1%;
+		margin: -49px 0px 25px 240px;
+	}
+/*
+	.hierarchy-content {
+		margin-left: -70px !important;
+	}
+*/
+	.tree li p {
+		width: 200px;
+	}
+}
+@media (min-width:872px) and (max-width:933px) { 
+	img#pri-mainlogo {
+		margin-left: -6px !important;
+		width: 225px !important;
+	}
+	.horizontal-bar {
+		width: 71.8%;
+		margin: -49px 0px 25px 240px;
+	}
+/*
+	.hierarchy-content {
+		margin-left: -70px !important;
+	}
+*/
+	.tree li p {
+		width: 200px;
+	}
+}
+@media (min-width:912px) and (max-width:933px) { 
+	img#pri-mainlogo {
+		margin-left: -6px !important;
+		width: 225px !important;
+	}
+	.horizontal-bar {
+		width: 72.5%;
+		margin: -49px 0px 25px 240px;
+	}
+/*
+	.hierarchy-content {
+		margin-left: -70px !important;
+	}
+*/
+	.tree li p {
+		width: 200px;
+	}
+}
+@media (min-width:934px) and (max-width:991px) { 
+	img#pri-mainlogo {
+		margin-left: -6px !important;
+		width: 225px !important;
+	}
+	.horizontal-bar {
+		width: 74.6%;
+		margin: -49px 0px 25px 240px;
+	}
+	.tree li p {
+		width: 200px;
+	}
+}
+@media (min-width:768px) and (max-width:991px) { 
+	.vertcal-bar-content {
+		left: 68px;
+	}
+	.vertical-bar {
+		width: 40% !important;
+	}
+}
+
+@media (min-width:1101px) and (max-width:1125px) { 
+	img#pri-mainlogo {
+		margin-left: -21px !important;
+		width: 242px !important;
+	}
+	.vertical-bar {
+		width: 24.8% !important;
+		height: 582px;
+	}
+	.horizontal-bar {
+		margin: -49px 0px 25px 243px !important;
+	}
+	.tree li p {
+		width: 215px;
+	}
+}
+@media (min-width:1126px) and (max-width:1133px) { 
+	img#pri-mainlogo {
+		margin-left: -19px !important;
+		width: 246px !important;
+	}
+	.vertical-bar {
+		width: 24.8% !important;
+		height: 562px;
+	}
+	.horizontal-bar {
+		margin: -49px 0px 25px 250px !important;
+	}
+}
+@media (min-width:1134px) and (max-width:1141px) { 
+	img#pri-mainlogo {
+		margin-left: -18px !important;
+		width: 248px !important;
+	}
+	.vertical-bar {
+		width: 24.5% !important;
+		height: 565px;
+	}
+	.horizontal-bar {
+		margin: -49px 0px 25px 250px !important;
+	}
+}
+@media (min-width:1142px) and (max-width:1167px) { 
+	img#pri-mainlogo {
+		margin-left: -22px !important;
+		width: 248px !important;
+	}
+}
+@media (min-width:1168px) and (max-width:1185px) { 
+	img#pri-mainlogo {
+		margin-left: -18px !important;
+		width: 248px !important;
+	}
+}
+@media (min-width:1186px) and (max-width:1205px) { 
+	img#pri-mainlogo {
+		margin-left: -18px !important;
+		width: 248px !important;
+	}
+}
+@media (min-width:1206px) and (max-width:1222px) { 
+	img#pri-mainlogo {
+		margin-left: -16px !important;
+		width: 248px !important;
+	}
+}
+@media (min-width:992px) and (max-width:1010px) { 
+	 img#pri-mainlogo {
+		margin-left: -16px !important;
+		width: 242px !important;
+	 }
+	.horizontal-bar {
+		margin: -49px 0px 25px 240px !important;
+		width: 74.2% !important;
+	}
+	.tree li p {
+		width: 199px !important;
+    }
+}
+@media (min-width:1011px) and (max-width:1024px) { 
+	 img#pri-mainlogo {
+		margin-left: -8px !important;
+		width: 242px !important;
+	 }
+	.horizontal-bar {
+		margin: -49px 0px 25px 247px !important;
+		width: 74.2% !important;
+	}
+	.tree li p {
+		width: 202px !important;
+    }
+}
+@media (min-width:992px) and (max-width:1024px) { 
+	 .vertical-bar {
+		margin-left: 6px !important;
+		height: 600px !important;
+		width: 25.5% !important;
+	}
+	.hierarchy-content {
+        position: absolute;
+        margin-left: 195px !important;
+	}	
+	.vertcal-bar-content {
+		left: 75px !important;
+		bottom: 363px !important;
+	}
+}	
+@media (min-width:1025px) and (max-width:1048px) {
+	.tree li p {
+		width: 207px;
+	}
+}
+@media (min-width:1049px) and (max-width:1080px) {
+	.tree li p {
+		width: 215px;
+	}
+}
+@media (min-width:1025px) and (max-width:1036px) {
+	.horizontal-bar {
+		width: 77.3%;
+		margin: -49px 0px 25px 224px;
+	}
+	img#pri-mainlogo {
+		margin-left: -28px !important;
+		width: 240px !important;
+	}
+}
+@media (min-width:1036px) and (max-width:1046px) {
+	.horizontal-bar {
+		width: 77.3%;
+		margin: -49px 0px 25px 226px;
+	}
+	img#pri-mainlogo {
+		margin-left: -26px !important;
+		width: 240px !important;
+	}
+}
+@media (min-width:1046px) and (max-width:1052px) {
+	.horizontal-bar {
+		width: 77.3%;
+		margin: -49px 0px 25px 230px;
+	}
+	img#pri-mainlogo {
+		margin-left: -26px !important;
+		width: 240px !important;
+	}
+}
+@media (min-width:1053px) and (max-width:1080px) {
+	.horizontal-bar {
+		width: 77.4%;
+		margin: -49px 0px 25px 226px;
+	}
+	img#pri-mainlogo {
+		margin-left: -26px !important;
+		width: 240px !important;
+	}
+}
+@media (min-width:1025px) and (max-width:1080px) {
+	.vertical-bar {
+		height: 582px;
+		width: 25.5%;
+	}
+}
+@media (min-width:1081px) and (max-width:1100px) {
+	.horizontal-bar {
+		width: 77.5%;
+		margin: -49px 0px 25px 237px;
+	}
+	img#pri-mainlogo {
+		margin-left: -22px !important;
+		width: 240px !important;
+	}
+	.vertical-bar {
+		height: 582px;
+	}
+	.tree li p {
+		width: 215px;
+	}
+}
+@media (min-width:1025px) and (max-width:1125px) { 
+	.vertical-bar {
+		width: 24.8%;
+		margin-left: -10px;
+	}
+	.hierarchy-content {
+		position: absolute;
+		margin-left: 192px;
+	}
+	.vertcal-bar-content {
+		position: absolute;
+		bottom: 358px;
+		left: 78px;
+		height: 575px !important;
+	}
+}
+@media (min-width:1126px) and (max-width:1141px) {
+	.tree li p {
+		width: 229px !important;
+	}
+}
+@media (min-width:1142px) and (max-width:1222px) {
+	.vertical-bar {
+		height: 562px;
+	}
+}
+@media (min-width:1142px) and (max-width:1266px) {
+	.tree li p {
+		width: 235px !important;
+	}
+}
+@media (min-width:1167px) and (max-width:1291px) {
+	.tree li p {
+		width: 242px !important;
+	}
+}
+@media (min-width:1192px) and (max-width:1205px) {
+	.tree li p {
+		width: 248px !important;
+	}
+}
+@media (min-width:1206px) and (max-width:1222px) {
+	.tree li p {
+		width: 255px !important;
+	}
+}
+@media (min-width:1192px) and (max-width:1222px) {
+	.vertical-bar {
+		width: 24% !important;
+	}
+}
+
+@media (min-width:1142px) and (max-width:1167px) {
+	.horizontal-bar {
+		width: 78.2% !important;
+		margin: -49px 0px 25px 245px !important;
+	}
+}
+@media (min-width:1168px) and (max-width:1185px) {
+	.horizontal-bar {
+		width: 78% !important;
+		margin: -49px 0px 25px 250px !important;
+	}
+}
+@media (min-width:1126px) and (max-width:1185px) {
+	.vertical-bar {
+		margin-left: -9px !important;
+		width: 24%;
+	}
+	.hierarchy-content {
+		position: absolute;
+		margin-left: 222px !important;
+	}
+}
+@media (min-width:1186px) and (max-width:1222px) {
+	.vertical-bar {
+		margin-left: -12px !important;
+	}
+	.hierarchy-content {
+		position: absolute;
+		margin-left: 222px !important;
+	}
+}
+@media (min-width:1186px) and (max-width:1205px) {
+	.horizontal-bar {
+		width: 78% !important;
+		margin: -49px 0px 25px 252px !important;
+	}
+	.vertical-bar {
+		width: 24%;
+	}
+}
+@media (min-width:1206px) and (max-width:1222px) {
+	.horizontal-bar {
+		width: 78.2% !important;
+		margin: -49px 0px 25px 255px !important;
+	}
+}
+@media (min-width:1223px) and (max-width:1249px) { 
+	.vertical-bar {
+		width: 24.8% !important;
+	}	
+}		
+@media (min-width:1250px) and (max-width:1270px) { 
+	.vertical-bar {
+		width: 24.2% !important;
+	}
+}
+@media (min-width:1223px) and (max-width:1270px) { 
+	img#pri-mainlogo {
+		margin-left: -3px !important;
+		width: 256px !important;
+	}
+	.horizontal-bar {
+		margin: -49px 0px 25px 283px !important;
+		width: 76.5% !important;
+	}
+	.vertical-bar {
+		margin-left: -2px !important;
+		height: 558px !important;
+	}
+	.vertcal-bar-content {
+		bottom: 355px;
+	}
+	.hierarchy-content {
+		position: absolute;
+		margin-left: 255px !important;
+	}	
+	.tree li p {
+		width: 250px !important;
+	}		
+}	
+
+@media (min-width:1271px) and (max-width:1292px) { 
+	img#pri-mainlogo {
+		margin-left: -1px !important;
+		width: 248px !important;
+	}
+	.horizontal-bar {
+		margin: -49px 0px 25px 285px !important;
+		width: 76.3% !important;
+	}
+	.vertical-bar {
+		height: 562px;
+	}
+	.vertcal-bar-content {
+		bottom: 355px;
+		left: 100px;
+	}
+	.hierarchy-content {
+		position: absolute;
+		margin-left: 250px !important;
+	}	
+	.tree li p {
+		width: 265px !important;
+	}		
+}	
+@media (min-width:1293px) and (max-width:1305px) { 
+	.horizontal-bar {
+		margin: -49px 0px 25px 279px !important;
+		width: 77.5% !important;
+	}
+}
+@media (min-width:1306px) and (max-width:1328px) { 
+	.horizontal-bar {
+		margin: -49px 0px 25px 281px !important;
+		width: 77.5% !important;
+	}
+}
+@media (min-width:1293px) and (max-width:1328px) { 
+	img#pri-mainlogo {
+		margin-left: -1px !important;
+		width: 248px !important;
+	}
+	.vertical-bar {
+/*
+		margin-left: 2px !important;
+        width: 23.6%;
+*/
+        height: 564px;
+	}
+	.vertcal-bar-content {
+		bottom: 354px;
+		left: 103px;
+	}
+	.hierarchy-content {
+		position: absolute;
+		margin-left: 250px !important;
+	}	
+	.tree li p {
+		width: 270px !important;
+	}		
+}	
+@media (min-width:1329px) and (max-width:1359px) { 
+	.hierarchy-content {
+		position: absolute;
+		margin-left: 240px !important;
+	}
+	.horizontal-bar {
+		width: 76.3%;	
+		margin: -49px 0px 25px 293px !important;
+	}
+	.vertical-bar {
+		width: 23.4%;
+		height: 548px;
+	}
+}
+
+/* End of media queries */
+
+
+/* Custom Code */
+            
+            
+/*            
+            
+/* Normal View */
+
+div#clark, div#philip, div#adrian, div#sarah, div#jim, div#manish {
+    width: 68%;
+} 
+div#clark, div#adrian, div#jim {
+    margin-left: 190px;
+}
+div#philip, div#sarah, div#manish {
+    margin-right: 190px;
+} 
+div#clark p {
+    margin-right: 10px;
+}
+div#jim p {
+    margin-right: 38px;
+}
+div#manish p {
+    margin-right: 18px;
+}
+div#sarah p {
+    margin-right: -11px;
+}
+div#philip p {
+    margin-right: -20px;
+}
+
+/* End of Normal View */
+
+/* Media queries for responsivess */
+
+@media (min-width:241px) and (max-width: 320px) {
+   img#pri-mainlogo {
+       width: 270px !important;
+       margin-left: -19px;
+   }
+}
+
+@media (max-width: 480px) {
+   div#clark, div#philip, div#adrian, div#sarah, div#jim, div#manish {
+      width: 100% !important;
+   } 
+   div#philip, div#sarah, div#manish {
+      /*margin-right: 0px !important;*/
+   } 
+   div#jim p, div#manish p, div#philip p  {
+      margin-right: 0px !important;
+   }
+   div#adrian p {
+      margin-right: -11px;
+   }   
+   div#clark p {
+      margin-right: 23px;
+   } 
+   div#sarah p {
+	  margin-right: 30px;  
+   }   
+   .heading {
+		text-align: center;
+    }
+}
+         
+@media (max-width: 767px) {
+   div#clark, div#adrian, div#jim, div#philip, div#sarah, div#manish {
+      margin-left: 6px !important;
+      margin-right: 0px !important;
+   }  
+}       
+
+@media (min-width:481px) and (max-width:767px) {
+	div#clark, div#philip, div#adrian, div#sarah, div#jim, div#manish {
+      width: 88% !important;
+    } 
+    div#jim p, div#manish p, div#sarah p, div#philip p {
+      margin-right: 0px !important;
+    }
+}
+
+@media (min-width:768px) and (max-width:1007px) { 
+	div#clark, div#philip, div#adrian, div#sarah, div#jim, div#manish {
+       width: 100% !important;
+    } 
+    div#clark, div#adrian, div#jim {
+       margin-left: 2px !important;
+    }
+    div#philip, div#sarah, div#manish {
+       margin-right: 0px !important;
+    }
+    div#jim p, div#manish p, div#sarah p, div#philip p {
+      margin-right: 0px !important;
+    }
+}
+
+@media (min-width:752px) and (max-width:788px) { 
+	div#sarah {
+      padding-bottom: 0px !important;
+    }
+    div#sarah h4 {
+      margin-top: 2px !important;
+    }
+    div#adrian h4 {
+      padding-top: 5px !important;
+    }
+}
+
+@media (min-width:810px) and (max-width:963px) { 
+	div#philip {
+      padding-bottom: 0px !important;
+    }
+    div#philip h4 {
+      margin-top: 2px !important;
+    }
+    div#clark h4 {
+      padding-top: 5px !important;
+    }
+}
+
+@media (min-width:768px) and (max-width:927px) { 
+    div#sarah h4 {
+       margin-top: 2px !important;
+    }
+    div#sarah { 
+      padding-bottom: 0px !important;
+    }
+    div#adrian {
+      padding-top: 10px;
+    }
+}
+	
+
+@media (min-width:1008px) and (max-width:1030px) { 
+	div#clark, div#philip, div#adrian, div#sarah, div#jim, div#manish {
+       width: 95% !important;
+    } 
+    
+}
+
+@media (min-width:1008px) and (max-width:1021px) { 
+	div#clark, div#adrian, div#jim {
+       margin-left: 20px !important;
+    }
+    div#philip, div#sarah, div#manish {
+       margin-right: 20px !important;
+    }
+}
+
+@media (min-width:1002px) and (max-width:1006px) { 
+	div#manish h4 {
+       margin-top: 2px;
+    }
+    div#manish {
+       padding-bottom: 0px;
+    }
+    div#jim {
+       padding-top: 10px;
+    }
+}    
+
+@media (min-width:1022px) and (max-width:1030px) { 
+	div#clark, div#adrian, div#jim {
+       margin-left: 20px !important;
+    }
+    div#philip, div#sarah, div#manish {
+       margin-right: 20px !important;
+    }
+}
+
+@media (min-width:1157px) and (max-width:1280px) { 
+	div#manish {
+       padding-bottom: 0px;
+    }
+    div#manish h4 {
+       margin-top: 2px;
+    }
+    div#jim {
+       padding-top: 10px;
+    }
+}
+
+@media (min-width:1025px) and (max-width:1280px) { 
+	div#clark, div#philip, div#adrian, div#sarah, div#jim, div#manish {
+       width: 92% !important;
+    } 
+    div#clark, div#adrian, div#jim {
+       margin-left: 30px !important;
+    }
+    div#philip, div#sarah, div#manish {
+       margin-right: 30px !important;
+    }
+}
+
+@media (min-width:1281px) and (max-width:1325px) { 
+	div#clark, div#philip, div#adrian, div#sarah, div#jim, div#manish {
+       width: 82% !important;
+    } 
+    div#clark, div#adrian, div#jim {
+       margin-left: 100px !important;
+    }
+    div#philip, div#sarah, div#manish {
+       margin-right: 100px !important;
+    }
+}
+
+/* End of media queries */
+
+*/
+            
+@media (min-width:1310px) and (max-width:1366px) {
+	.separator{
+		margin-left:190px;
+	}
+}
+@media (min-width:1367px) and (max-width:1400px)
+{
+	.separator{
+		margin-left:100px;
+	}
+}
+@media (min-width:1401px) and (min-width:1600px)
+{
+	.separator{
+		margin-left:292px;
+	}
+}
+/*
+@media (min-width:768px) and (max-width:1366px)
+{
+	.separator{
+		margin-left:89px;
+	}
+}
+*/
+*/
+/*
+@media (min-width: 1289px) and (max-width: 1400px) {
+	.separator{
+		margin-left:189px;
+	}
+}
+*/
+/*
+@media screen and (min-width:1920px)
+{
+	.separator{
+		margin-left:505px;
+	}
+}
+@media screen and (min-width: 2560px)
+{
+	.separator{
+		margin-left:805px;
+	}
+}
+*/
+/*
+@media screen(min-width: 1071px) and (max-width: 1280px) {
+	.separator{
+		margin-left:91px;
+	}
+}
+*/
+/*
+@media screen and (min-width:1440px){
+		.separator{
+		margin-left: 255px;
+		width: 896px;
+		height: 315px;
+		
+	}
+	.separator h4 {
+    text-align: center;
+   
+    }
+    img.primary-logo {
+    width: 252px;
+}
+#custom-content {
+	 margin-left: -12px;
+ }
+ .span4.thumbnail p {
+    margin-left: 15px;
+   }
+}
+*/
+/*
+@media screen and (min-width:1600px){
+		.separator{
+		margin-left: 308px;
+		width: 896px;
+		height: 315px;
+		
+	}
+	.separator h4 {
+    text-align: center;
+   
+    }
+    img.primary-logo {
+    width: 252px;
+}
+}
+*/
+/*
+@media screen and (min-width:1680px){
+		.separator{
+		margin-left: 343px;
+		width: 856px;
+		height: 315px;
+		
+	}
+	.separator h4 {
+    text-align: center;
+   
+    }
+    img.primary-logo {
+    width: 252px;
+}
+#custom-content {
+	 margin-left: -12px;
+ }
+ .span4.thumbnail p {
+    margin-left: 15px;
+   }
+}
+*/
+@media screen and (max-width: 320px) {
+	.separator{
+		margin-left: -7px;
+		width: 276px;
+		height: 703px;
+		
+	}
+	.separator h4 {
+    text-align: center;
+   
+    }
+    img.primary-logo {
+    width: 252px;
+}
+#custom-content {
+	 margin-left: -12px;
+ }
+ .span4.thumbnail p {
+    margin-left: 15px;
+   }
+    
+}
+
+@media (min-width: 321px) and (max-width: 375px) {
+	.separator{
+		margin-left: 22px;
+		width: 276px;
+		height: 703px;
+		
+	}
+	.separator h4 {
+    text-align: center;
+   
+    }
+    img.primary-logo {
+    width: 252px;
+}
+#custom-content {
+	 margin-left: -12px;
+ }
+ .span4.thumbnail p {
+    margin-left: 15px;
+   }
+    
+}
+@media (min-width: 384px) and (max-width: 413px) {
+	.separator{
+		margin-left: 24px;
+		width: 276px;
+		height: 703px;
+		
+	}
+	.separator h4 {
+    text-align: center;
+   
+    }
+    img.primary-logo {
+    width: 252px;
+}
+#custom-content {
+	 margin-left: -12px;
+ }
+ .span4.thumbnail p {
+    margin-left: 15px;
+   }
+    
+}
+@media (min-width: 414px) and (max-width: 480px) {
+	.separator{
+		margin-left: 16px;
+		width: 324px;
+		height: 703px;
+		
+	}
+	.separator h4 {
+    text-align: center;
+   
+    }
+    img.primary-logo {
+    width: 242px;
+}
+#custom-content {
+	 margin-left: -12px;
+ }
+ .span4.thumbnail p {
+    margin-left: 15px;
+   }
+    
+}
+@media (min-width: 481px) and (max-width: 568px) {
+	.separator{
+		margin-left: 19px;
+		width: 480px;
+		height: 542px;
+		
+	}
+	.separator h4 {
+    text-align: center;
+   
+    }
+/*
+    img.primary-logo {
+    width: 252px;
+}
+*/
+#custom-content {
+	 margin-left: -12px;
+ }
+ .span4.thumbnail p {
+    margin-left: 15px;
+   }
+    
+}
+@media (min-width: 569px) and (max-width: 600px) {
+	.separator{
+		margin-left: 13px;
+		width: 515px;
+		height: 498px;
+		
+	}
+	.separator h4 {
+    text-align: center;
+   
+    }
+    img.primary-logo {
+    width: 252px;
+}
+#custom-content {
+	 margin-left: -12px;
+ }
+ .span4.thumbnail p {
+    margin-left: 15px;
+   }
+    
+}
+@media (max-width:240px){
+	.separator{
+		margin-left:0px;
+		width: 185px;
+		height: 1166px;
+		
+	}
+	img.primary-logo {
+    width: 176px;
+}
+}
+@media (min-width: 601px) and (max-width: 667px) {
+	.separator{
+		margin-left: 8px;
+		width: 545px;
+		height: 483px;
+		
+	}
+	.separator h4 {
+    text-align: center;
+   
+    }
+    img.primary-logo {
+    width: 252px;
+}
+#custom-content {
+	 margin-left: -12px;
+ }
+ .span4.thumbnail p {
+    margin-left: 15px;
+   }
+    
+}
+@media (min-width: 668px) and (max-width: 736px) {
+	.separator{
+		margin-left: 57px;
+		width: 579px;
+		height: 483px;
+		
+	}
+	.separator h4 {
+    text-align: center;
+   
+    }
+    img.primary-logo {
+    width: 252px;
+}
+#custom-content {
+	 margin-left: -12px;
+ }
+ .span4.thumbnail p {
+    margin-left: 15px;
+   }
+    
+}
+
+@media (min-width: 737px) and (max-width: 768px) {
+	.separator{
+		margin-left: 27px;
+		width: 669px;
+		height: 361px;
+		
+	}
+	.separator h4 {
+    text-align: center;
+   
+    }
+    img.primary-logo {
+    width: 238px;
+    margin-left: -9px;
+   }
+#custom-content {
+	 margin-left: -12px;
+ }
+ .span4.thumbnail p {
+    margin-left: 15px;
+   }
+    
+}
+@media screen and (min-width:1900px)
+{
+	.separator{
+		margin-left:505px;
+	}
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+	.separator{
+		margin-left: 121px;
+		height: 361px;
+		width:709px;
+		
+	}
+	.separator h4 {
+    text-align: center;
+   
+    }
+    img.primary-logo {
+    width: 252px;
+}
+
+#custom-content {
+	 margin-left: -12px;
+ }
+ .span4.thumbnail p {
+    margin-left: 15px;
+   }
+    
+}
+</style>
+	</head>
+<body>
+<div id="custom-content" style="display: block;"><div><div>
+		<div class="intro container-fluid">
+		
+		<div class="heading">
+			<img  class ="primary-logo" id="pri-mainlogo" align="center" width="256px" src='/custom/themes/default/images/SimpleCRM-priLogo.jpg'/>
+				<div class="horizontal-bar">Click on any person to begin the trial for that role</div>
+		</div>
+		<div class="demo-container">
+			<div class="vertical-bar">
+			<div class="authenticate">
+			<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
+
+/*********************************************************************************
+
+ * Description: TODO:  To be written.
+ * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+ * All Rights Reserved.
+ * Contributor(s): ______________________________________..
+ ********************************************************************************/
+/** @var AuthenticationController $authController */
+$authController->authController->pre_login();
+
+global $current_language, $mod_strings, $app_strings;
+if(isset($_REQUEST['login_language'])){
+    $lang = $_REQUEST['login_language'];
+    $_REQUEST['ck_login_language_20'] = $lang;
+	$current_language = $lang;
+    $_SESSION['authenticated_user_language'] = $lang;
+    $mod_strings = return_module_language($lang, "Users");
+    $app_strings = return_application_language($lang);
+}
+$sugar_smarty = new Sugar_Smarty();
+echo '<link rel="stylesheet" type="text/css" media="all" href="'.getJSPath('custom/modules/Users/login.css').'">';
+echo '<script type="text/javascript" src="'.getJSPath('modules/Users/login.js').'"></script>';
+global $app_language, $sugar_config;
+//we don't want the parent module's string file, but rather the string file specifc to this subpanel
+global $current_language;
+
+// Get the login page image
+if ( sugar_is_file('custom/include/images/sugar_md.png') ) {
+    $login_image = '<IMG src="custom/include/images/sugar_md.png" alt="Sugar" width="340" height="25">';
+}
+else {
+    $login_image = '<IMG src="include/images/sugar_md_open.png" alt="Sugar" width="340" height="25" style="margin: 5px 0;">';
+}
+
+$login_image_url = SugarThemeRegistry::current()->getImageURL('company_logo.png');
+$login_image = '<IMG src="'.$login_image_url.'" alt="SuiteCRM" style="margin: 5px 0;">';
+
+
+$sugar_smarty->assign('LOGIN_IMAGE',$login_image);
+
+// See if any messages were passed along to display to the user.
+if(isset($_COOKIE['loginErrorMessage'])) {
+    if ( !isset($_REQUEST['loginErrorMessage']) ) {
+        $_REQUEST['loginErrorMessage'] = $_COOKIE['loginErrorMessage'];
+    }
+    SugarApplication::setCookie('loginErrorMessage', '', time()-42000, '/');
+}
+if(isset($_REQUEST['loginErrorMessage'])) {
+    if (isset($mod_strings[$_REQUEST['loginErrorMessage']])) {
+        echo "<p align='center' class='error' > ". $mod_strings[$_REQUEST['loginErrorMessage']]. "</p>";
+    } else if (isset($app_strings[$_REQUEST['loginErrorMessage']])) {
+        echo "<p align='center' class='error' > ". $app_strings[$_REQUEST['loginErrorMessage']]. "</p>";
+    }
+}
+
+$lvars = $GLOBALS['app']->getLoginVars();
+$sugar_smarty->assign("LOGIN_VARS", $lvars);
+foreach($lvars as $k => $v) {
+    $sugar_smarty->assign(strtoupper($k), $v);
+}
+
+// Retrieve username from the session if possible.
+if(isset($_SESSION["login_user_name"])) {
+	if (isset($_REQUEST['default_user_name']))
+		$login_user_name = $_REQUEST['default_user_name'];
+	else
+		$login_user_name = $_SESSION['login_user_name'];
+} else {
+	if(isset($_REQUEST['default_user_name'])) {
+		$login_user_name = $_REQUEST['default_user_name'];
+	} elseif(isset($_REQUEST['ck_login_id_20'])) {
+		$login_user_name = get_user_name($_REQUEST['ck_login_id_20']);
+	} else {
+		$login_user_name = $sugar_config['default_user_name'];
+	}
+	$_SESSION['login_user_name'] = $login_user_name;
+}
+$sugar_smarty->assign('LOGIN_USER_NAME', $login_user_name);
+
+$mod_strings['VLD_ERROR'] = $GLOBALS['app_strings']["\x4c\x4f\x47\x49\x4e\x5f\x4c\x4f\x47\x4f\x5f\x45\x52\x52\x4f\x52"];
+
+// Retrieve password from the session if possible.
+if(isset($_SESSION["login_password"])) {
+	$login_password = $_SESSION['login_password'];
+} else {
+	$login_password = $sugar_config['default_password'];
+	$_SESSION['login_password'] = $login_password;
+}
+$sugar_smarty->assign('LOGIN_PASSWORD', $login_password);
+
+if(isset($_SESSION["login_error"])) {
+	$sugar_smarty->assign('LOGIN_ERROR', $_SESSION['login_error']);
+}
+if(isset($_SESSION["waiting_error"])) {
+    $sugar_smarty->assign('WAITING_ERROR', $_SESSION['waiting_error']);
+}
+
+if (isset($_REQUEST['ck_login_language_20'])) {
+	$display_language = $_REQUEST['ck_login_language_20'];
+} else {
+	$display_language = $sugar_config['default_language'];
+}
+
+if (empty($GLOBALS['sugar_config']['passwordsetting']['forgotpasswordON']))
+	$sugar_smarty->assign('DISPLAY_FORGOT_PASSWORD_FEATURE','none');
+
+$the_languages = get_languages();
+if ( count($the_languages) > 1 )
+    $sugar_smarty->assign('SELECT_LANGUAGE', get_select_options_with_id($the_languages, $display_language));
+$the_themes = SugarThemeRegistry::availableThemes();
+if ( !empty($logindisplay) )
+	$sugar_smarty->assign('LOGIN_DISPLAY', $logindisplay);;
+
+// RECAPTCHA
+
+	$admin = new Administration();
+	$admin->retrieveSettings('captcha');
+	$captcha_privatekey = "";
+	$captcha_publickey="";
+	$captcha_js = "";
+	$Captcha='';
+
+	// if the admin set the captcha stuff, assign javascript and div
+	if(isset($admin->settings['captcha_on'])&& $admin->settings['captcha_on']=='1' && !empty($admin->settings['captcha_private_key']) && !empty($admin->settings['captcha_public_key'])){
+
+			$captcha_privatekey = $admin->settings['captcha_private_key'];
+			$captcha_publickey = $admin->settings['captcha_public_key'];
+			$captcha_js .="<script type='text/javascript' src='" . getJSPath('cache/include/javascript/sugar_grp1_yui.js') . "'></script><script type='text/javascript' src='" . getJSPath('cache/include/javascript/sugar_grp_yui2.js') . "'></script>
+			<script type='text/javascript' src='http://www.google.com/recaptcha/api/js/recaptcha_ajax.js'></script>
+			<script>
+			function initCaptcha(){
+			Recaptcha.create('$captcha_publickey' ,'captchaImage',{theme:'custom'});
+			}
+			window.onload=initCaptcha;
+
+			var handleFailure=handleSuccess;
+			var handleSuccess = function(o){
+				if(o.responseText!==undefined && o.responseText =='Success'){
+					generatepwd();
+					Recaptcha.reload();
+				}
+				else{
+					if(o.responseText!='')
+						document.getElementById('generate_success').innerHTML =o.responseText;
+					Recaptcha.reload();
+				}
+			}
+			var callback2 ={ success:handleSuccess, failure: handleFailure };
+
+			function validateAndSubmit(){
+					var form = document.getElementById('form');
+					var url = '&to_pdf=1&module=Home&action=index&entryPoint=Changenewpassword&recaptcha_challenge_field='+Recaptcha.get_challenge()+'&recaptcha_response_field='+ Recaptcha.get_response();
+					YAHOO.util.Connect.asyncRequest('POST','index.php',callback2,url);
+			}</script>";
+		$Captcha.="<tr>
+			<td scope='row' width='20%'>".$mod_strings['LBL_RECAPTCHA_INSTRUCTION'].":</td>
+		    <td width='70%'><input type='text' size='26' id='recaptcha_response_field' value=''></td>
+
+		</tr>
+		<tr>
+
+		 	<td colspan='2'><div style='margin-left:2px'class='x-sqs-list' id='recaptcha_image'></div></td>
+		</tr>
+		<tr>
+			<td colspan='2' align='right'><a href='javascript:Recaptcha.reload()'>".$mod_strings['LBL_RECAPTCHA_NEW_CAPTCHA']."</a>&nbsp;&nbsp;
+			 		<a class='recaptcha_only_if_image' href='javascript:Recaptcha.switch_type(\"audio\")'>".$mod_strings['LBL_RECAPTCHA_SOUND']."</a>
+			 		<a class='recaptcha_only_if_audio' href='javascript:Recaptcha.switch_type(\"image\")'> ".$mod_strings['LBL_RECAPTCHA_IMAGE']."</a>
+		 	</td>
+		</tr>";
+		$sugar_smarty->assign('CAPTCHA', $Captcha);
+		echo $captcha_js;
+
+	}else{
+		echo "<script>
+		function validateAndSubmit(){generatepwd();}
+		</script>";
+	}
+
+if (file_exists('themes/'.SugarThemeRegistry::current().'/tpls/login.tpl')) {
+	echo $sugar_smarty->display('themes/'.SugarThemeRegistry::current().'/tpls/login.tpl');
+} else {
+	echo $sugar_smarty->display('custom/modules/Users/login.tpl');
+}
+?>
+			</div>
+			</div>
+			<div class="hierarchy-content">
+			<div class="tree">
+	<ul>
+		<li>
+			<a id="list-frmt" href="#"><img width="84px" height="84px" id="clark" class="pull-left" alt="Sam Clark" src="custom/themes/default/images/director.jpg" align="left" onclick="hack_login('sam','Sam1');">
+								<h4 style="cursor:pointer" onclick="hack_login('sam','Sam1');"><strong style="color: #337ab7;text-decoration: none;">Director</strong></h4>
+										<p class="sam-direc" style="padding-left: 15px;width: 300px;"><strong>Sam Clark</strong> prefers to discover business insights and make better & faster decisions.</p></a>
+			<ul>
+				<li>
+					<a id="data-sls" href="#"><img width="84px" height="84px" id="adrian" class="pull-left" alt="Adrian Lee" src='custom/themes/default/images/vp-sales.jpg' onclick="hack_login('adrian','Adrian1');"> 
+								<h4 style="cursor:pointer" onclick="hack_login('adrian','Adrian1');"><strong style="color: #337ab7;text-decoration: none;">Vice President of Sales</strong></h4>
+										<p><strong>Adrian Lee</strong> prefers working with high-level dashboards and pre-built reports.</p></a>
+					<ul>
+						<li>
+							<a id="sales-rpr" href="#"><img width="84px" height="84px" id="sarah" class="pull-left" alt="Jim Hay" src="custom/themes/default/images/Sarah.jpg" onclick="hack_login('sarah','Sarah1');">
+								<h4 style="cursor:pointer" onclick="hack_login('sarah','Sarah1');"><strong style="color: #337ab7;text-decoration: none;">Sales Representative</strong></h4>
+										<p><strong>Sarah Dally</strong> manages sales operations and sales team. She identifies and works on key sales opportunities.</p></a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a id="mkng-mgr" href="#"><img width="84px" height="84px" id="philip" class="pull-left" alt="Philip S" src="custom/themes/default/images/markng-mngr.jpg" onclick="hack_login('philip','Philip1');">
+								<h4 style="cursor:pointer" onclick="hack_login('philip','Philip1');"><strong style="color: #337ab7;text-decoration: none;">Marketing Manager</strong></h4>
+										<p><strong>Philip S</strong> manages and tracks lead generation from multiple channels and works on follow-up on key prospects.</p></a>
+			    </li>
+				<li>
+			       <a id="vp-sprt" href="#"><img width="84px" height="84px" id="jim" class="pull-left" alt="Sarah Dally" src="custom/themes/default/images/vp-sprt.jpg" onclick="hack_login('jim','Jim1');">
+								<h4 style="cursor:pointer" onclick="hack_login('jim','Jim1');"><strong style="color: #337ab7;text-decoration: none;">Vice President of Support</strong></h4>
+										<p><strong>Jim Hay</strong> is responsible for customer retention & satisfaction.</p></a>
+			       <ul>
+				      <li>
+					     <a id="list-data-csr" href="#"><img width="84px" height="84px" id="manish" class="pull-left" alt="Max Jensen" src="custom/themes/default/images/sprt-rep.jpg" onclick="hack_login('manish','Manish1');">
+								<h4 style="cursor:pointer" onclick="hack_login('manish','Manish1');"><strong style="color: #337ab7;text-decoration: none;">Customer Service Representative</strong></h4>
+										<p><strong>Manish Kumar</strong>  provides consistent service across customer touch points.</p></a>
+				         </li>
+				   </ul>      
+				</li>
+			</ul>
+		</li>
+	</ul>
+</div>
+</div>
+		
+			<!-- <div class="tcenter">
+					<img  class ="primary-logo" id="pri-mainlogo" align="center" width="300px" src='custom/themes/default/images/logo_new.jpg'/>
+					<br><br><br>
+					<p></p><h4>Choose a person for your free trial of SimpleCRM!</h4><p>Click on the appropriate person's image for logging in and if you may log out and switch to another person at anytime in your trial.</p><p></p>
+					<br><br>
+					<div class="row-fluid" align="center">  
+					<div class="col-md-6 col-sm-6"> 
+					<div class="span5 thumbnail" id="clark">
+							<img width="54px" height="65px" class="pull-left" alt="Sam Clark" src="custom/themes/default/images/img7.jpeg" onclick="hack_login('sam','Sam1');">
+								<h4 style="cursor:pointer" onclick="hack_login('sam','Sam1');"><strong style="color: #337ab7;text-decoration: none;">Director</strong></h4>
+										<p><strong>Sam Clark</strong> prefers to discover business insights and make better & faster decisions.</p>
+					</div>
+					</div>
+					<div class="col-md-6 col-sm-6"> 
+					<div class="span5 thumbnail" id="philip">
+							<img width="54px" height="65px" class="pull-left" alt="Philip S" src="custom/themes/default/images/img9.jpeg" onclick="hack_login('philip','Philip1');">
+								<h4 style="cursor:pointer" onclick="hack_login('philip','Philip1');"><strong style="color: #337ab7;text-decoration: none;">Marketing Manager</strong></h4>
+										<p><strong>Philip S</strong> manages and tracks lead generation from multiple channels and works on follow-up on key prospects.</p>
+					</div>
+					</div>   
+					<div class="col-md-6 col-sm-6">  
+						<div class="span5 thumbnail" id="adrian">
+							<img width="54px" height="65px" class="pull-left" alt="Adrian Lee" src='custom/themes/default/images/imgo.jpg' onclick="hack_login('will','Will1');"> 
+								<h4 style="cursor:pointer" onclick="hack_login('will','Will1');"><strong style="color: #337ab7;text-decoration: none;">Vice President of Sales</strong></h4>
+										<p><strong>Adrian Lee</strong> prefers working with high-level dashboards and pre-built reports.</p>
+						</div>
+					</div>
+					<div class="col-md-6 col-sm-6"> 
+					<div class="span5 thumbnail" id="sarah">
+							<img width="54px" height="65px" class="pull-left" alt="Jim Hay" src="custom/themes/default/images/imgo (1).jpg" onclick="hack_login('sarah','Sarah1');">
+								<h4 style="cursor:pointer" onclick="hack_login('sarah','Sarah1');"><strong style="color: #337ab7;text-decoration: none;">Sales Representative</strong></h4>
+										<p><strong>Sarah Dally</strong> manages sales operations and sales team. She identifies and works on key sales opportunities.</p>
+					</div>
+					</div>
+					<div class="col-md-6 col-sm-6"> 
+					<div class="span5 thumbnail" id="jim">
+							<img width="54px" height="65px" class="pull-left" alt="Sarah Dally" src="custom/themes/default/images/jim_new.jpg" onclick="hack_login('jim','Jim1');">
+								<h4 style="cursor:pointer" onclick="hack_login('jim','Jim1');"><strong style="color: #337ab7;text-decoration: none;">Vice President of Support</strong></h4>
+										<p><strong>Jim Hay</strong> is responsible for customer retention & satisfaction.</p>
+					</div>
+					</div>
+					<div class="col-md-6 col-sm-6"> 
+					<div class="span5 thumbnail" id="manish">
+							<img width="54px" height="65px" class="pull-left" alt="Max Jensen" src="custom/themes/default/images/max_new.jpg" onclick="hack_login('manish','Manish1');">
+								<h4 style="cursor:pointer" onclick="hack_login('manish','Manish1');"><strong style="color: #337ab7;text-decoration: none;">Customer Service Representative</strong></h4>
+										<p><strong>Manish Kumar</strong>  provides consistent service across customer touch points.</p>
+					</div>
+					</div>
+					
+				</div>
+				<br>
+		</div>
+	</div>
+</div> -->
+</div>
+</div>
+</body>
+</html>
+
+
+
+

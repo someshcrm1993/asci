@@ -1,0 +1,78 @@
+<?php
+/**
+ *  @copyright SimpleCRM http://www.simplecrm.com.sg
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * @author SimpleCRM <info@simplecrm.com.sg>
+ */
+
+ini_set('display_error',1);
+ini_set('display_startup_error',1);
+error_reporting(E_ALL);
+    if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
+    class lineitems
+    {
+        function relateList($bean, $event, $arguments)
+        {
+
+        	global $db,$current_user;
+            // date_default_timezone_set('UTC');
+            if(($bean->stage_c == 'Cancelled' || $bean->stage_c == 'Closed for updates') && !empty($bean->aos_quotes_id_c)){
+                $stage_c = $bean->stage_c;
+                $description = $bean->description;
+                $db->query("update aos_quotes q join aos_quotes_cstm qc on qc.id_c = q.id set qc.proforma_stage_c = '$stage_c',q.description = '$description' where qc.id_c = '$bean->aos_quotes_id_c'");
+            }
+            if(!empty($bean->aos_quotes_id_c)){
+                $db->query("update aos_quotes q join aos_quotes_cstm qc on qc.id_c = q.id  set q.invoice_status = 'Invoiced', qc.aos_invoices_id_c = '$bean->id' where q.id = '$bean->aos_quotes_id_c'");
+            }
+            $id = $bean->id;
+            $savedParticipantIds = array();
+            $participant_list = json_decode(html_entity_decode($bean->participant_list_c));
+            foreach($participant_list as $participant){
+                $participant_id[] = $participant->id;
+
+            } 
+
+           
+            $participantid_query = $db->query("SELECT aos_invoices_contacts_1contacts_idb FROM aos_invoices_contacts_1_c WHERE aos_invoices_contacts_1aos_invoices_ida = '$id' and deleted = 0");
+            while($participant_row = $db->fetchByAssoc($participantid_query)){
+                $savedParticipantIds[] = $participant_row['aos_invoices_contacts_1contacts_idb'];
+            }
+            foreach($participant_id as $pid){
+                if(!in_array($pid,$savedParticipantIds)){
+                    $rec_id = create_guid();
+                    $AOS_Invoices = BeanFactory::getBean('AOS_Invoices', $id);
+                    $AOS_Invoices->load_relationship('aos_invoices_contacts_1');
+                    $AOS_Invoices->aos_invoices_contacts_1->add($pid);
+                }
+            }
+            if(!empty($id)){
+                $diff_ids = array_diff($savedParticipantIds,$participant_id);
+                // print_r($diff_ids);print_r($savedParticipantIds);exit;
+                foreach($diff_ids as $delid){
+                    $db->query("update aos_invoices_contacts_1_c set deleted = 1 where aos_invoices_contacts_1contacts_idb = '$delid'");
+                }
+            }
+
+            if(empty($participant_id)){
+                $db->query("update aos_invoices_contacts_1_c set deleted = 1 where aos_invoices_contacts_1aos_invoices_ida = '$id'");
+            }
+        }
+    }
+
+?>

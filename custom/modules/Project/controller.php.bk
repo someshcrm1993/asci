@@ -1,0 +1,291 @@
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+/**
+ *  @copyright SimpleCRM http://www.simplecrm.com.sg
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * @author SimpleCRM <info@simplecrm.com.sg>
+ */
+
+
+class ProjectController extends SugarController
+{
+    function action_printLOPDocument()
+    {
+    	$projectBean = BeanFactory::getBean('Project',$_REQUEST['id']);
+    	$participantsBean = $projectBean->get_linked_beans('project_contacts_2', 'Contacts', array(), 0, -1, 0, "nomination_status_c='Accepted'");
+    	
+    	$data = array();
+    	foreach ($participantsBean as $key => $value) {
+    		$data[$key]['name'] = $value->name;
+    		$data[$key]['dsgAndOrg'] = $value->designation_c;
+    		if ($value->account_name != '' && $value->designation_c != '') {
+    			$data[$key]['dsgAndOrg'] .= ' & ';
+    		}
+    		$data[$key]['dsgAndOrg'] .= $value->account_name;
+    	}
+    	global $sugar_config;
+        // print_r($participantsBean);exit();
+    	include 'printDocument.php';
+    }
+
+    public function action_sendAcceptanceToAllNominations()
+    {
+        // error_reporting(E_ALL);
+        // ini_set('display_errors', 1);
+        // print_r($_REQUEST['id']);exit();
+        require_once('modules/EmailTemplates/EmailTemplate.php');
+        global $sugar_config;
+
+        $projectBean = BeanFactory::getBean('Project',$_REQUEST['id']);
+        $ppd = BeanFactory::getBean('Users',$projectBean->assigned_user_id);
+        $participantsBean = $projectBean->get_linked_beans('project_contacts_2', 'Contacts', array(), 0, -1, 0, "nomination_status_c='Accepted'");
+        // print_r($participantsBean);exit();
+        if (count($participantsBean)>0) {
+            foreach ($participantsBean as $key => $value) {
+                $contact = $value->get_linked_beans('scrm_partner_contacts_contacts_1', 'scrm_Partner_Contacts');
+               
+                $template = new EmailTemplate();
+                $template->retrieve_by_string_fields(array('id' => '443d8a76-b8a0-20d2-c951-59dc76caf81b','type'=>'email'));
+
+                //Parse Body HTMLcc
+                $template->body_html = $template->parse_template_bean($template->body_html,$value->module_dir,$value);
+                $template->body_html = $template->parse_template_bean($template->body_html,$projectBean->module_dir,$projectBean);
+                $template->body_html = $template->parse_template_bean($template->body_html,$ppd->module_dir,$ppd);
+                
+                $template->body_html = str_replace('reset_url', $contact[0]->portal_reset_password_c, $template->body_html);
+                $template->body_html = str_replace('portal_url', $sugar_config['portal_url'], $template->body_html);
+
+                // print_r($template->body_html);exit();
+
+                $this->sendEmailWithoutAttachment($template->subject,$template->body_html,$value->email1);
+                
+            }
+        }
+
+        SugarApplication::redirect('index.php?module=Project&action=DetailView&record='.$_REQUEST['id']);
+
+    }    
+
+    public function action_sendCancellationToNominations()
+    {
+        require_once('modules/EmailTemplates/EmailTemplate.php');
+        $projectBean = BeanFactory::getBean('Project',$_REQUEST['id']);
+        $participantsBeans = $projectBean->get_linked_beans('project_contacts_2');
+
+        $template = new EmailTemplate();
+        $template->retrieve_by_string_fields(array('id' => '420f3c81-fcd0-c880-68dd-5943c12a3357','type'=>'email'));
+
+        foreach ($participantsBeans as $key => $value) {
+            //Parse Body HTMLcc
+            $template->body_html = $template->parse_template_bean($template->body_html,$value->module_dir,$value);
+            $template->body_html = $template->parse_template_bean($template->body_html,$projectBean->module_dir,$projectBean);
+            
+            $this->sendEmailWithoutAttachment($template->subject,$template->body_html,$value->email1);
+                            
+        }   
+
+        SugarApplication::redirect('index.php?module=Project&action=DetailView&record='.$_REQUEST['id']);     
+    }
+
+    public function action_sendCancellationDeffered()
+    {
+        require_once('modules/EmailTemplates/EmailTemplate.php');
+        $projectBean = BeanFactory::getBean('Project',$_REQUEST['id']);
+        $participantsBeans = $projectBean->get_linked_beans('project_contacts_2');
+
+        $template = new EmailTemplate();
+        
+
+        $i = 0;
+        foreach ($participantsBeans as $key => $value) {
+            //Parse Body HTMLcc
+            $template->retrieve_by_string_fields(array('id' => '83dade83-0644-180b-7a81-59ccf4d5688d','type'=>'email'));
+            $template->body_html = $template->parse_template_bean($template->body_html,$projectBean->module_dir,$projectBean);
+            $template->body_html = str_replace('contact_name', $value->name, $template->body_html);
+            // $template->body_html = str_replace('contact_name', $value->name, $template->body_html);
+
+            $this->sendEmailWithoutAttachment($template->subject,$template->body_html,$value->email1);
+        }   
+        SugarApplication::redirect('index.php?module=Project&action=DetailView&record='.$_REQUEST['id']);     
+    }    
+
+    public function action_sendCancellationToSponsor()
+    {
+        require_once('modules/EmailTemplates/EmailTemplate.php');
+        $projectBean = BeanFactory::getBean('Project',$_REQUEST['id']);
+        $participantsBeans = $projectBean->get_linked_beans('project_contacts_2');
+
+        $template = new EmailTemplate();
+
+        foreach ($participantsBeans as $key => $value) {
+            $sponsor = BeanFactory::getBean('Accounts',$value->account_id_c);
+
+            // print_r($sponsor->email1);exit();
+            //Parse Body HTMLcc
+            $template->retrieve_by_string_fields(array('id' => '83dade83-0644-180b-7a81-59ccf4d5688d','type'=>'email'));
+            $template->body_html = $template->parse_template_bean($template->body_html,$projectBean->module_dir,$projectBean);
+            $template->body_html = str_replace('contact_name', $value->name, $template->body_html);
+            // $template->body_html = str_replace('contact_name', $value->name, $template->body_html);
+
+            $this->sendEmailWithoutAttachment($template->subject,$template->body_html,$value->email1);
+                            
+        }   
+
+        SugarApplication::redirect('index.php?module=Project&action=DetailView&record='.$_REQUEST['id']);     
+    }    
+
+    public function sendEmailWithoutAttachment($subject,$body,$email)
+    {
+        require_once('modules/Emails/Email.php');
+        require_once('include/SugarPHPMailer.php');
+        $emailObj = new Email(); 
+
+        $defaults = $emailObj->getSystemDefaultEmail(); 
+        
+        $mail = new SugarPHPMailer(); 
+
+        $mail->setMailerForSystem(); 
+        $mail->From = $defaults['email']; 
+        $mail->FromName = $defaults['name']; 
+        
+        $mail->Subject = $subject; 
+        $mail->Body = $body; 
+        $mail->prepForOutbound(); 
+        $mail->AddAddress($email);
+        $mail->isHTML(true); 
+        // print_r($mail);exit();
+        @$mail->Send(); 
+    }
+
+    public function sendEmail($subject,$body,$email,$file)
+    {
+        require_once('modules/Emails/Email.php');
+        require_once('include/SugarPHPMailer.php');
+        $emailObj = new Email(); 
+
+        $defaults = $emailObj->getSystemDefaultEmail(); 
+        
+        $mail = new SugarPHPMailer(); 
+
+        $mail->setMailerForSystem(); 
+        $mail->From = $defaults['email']; 
+        $mail->FromName = $defaults['name']; 
+        
+        $mail->Subject = $subject; 
+        $mail->Body = $body; 
+        $mail->prepForOutbound(); 
+        $mail->AddAddress($email);
+        $mail->isHTML(true); 
+        $mail->AddAttachment('timetable.docx', 'timetable.docx', 'base64', 'application/vnd.ms-word');
+        // print_r($mail);exit();
+        @$mail->Send(); 
+    }
+    public function countOfRatings($feedbackbean,$field_name)
+    {   
+        $ratings = array_map(function($o) use($field_name){
+            return $o->$field_name;
+        }, feedbackbean);
+
+        return count($ratings);
+    }
+
+    public function action_feedback(){
+        global $db;
+        $id = $_REQUEST['id'];
+        $query = "
+                SELECT
+                    SUM(CASE WHEN scrm_feedback_sessions_cstm.delivery_rating_c = 1 THEN 1 else 0 END) as unsatisfactory,
+                    SUM(CASE WHEN scrm_feedback_sessions_cstm.delivery_rating_c = 2 THEN 1 else 0 END) as satisfactory,
+                    SUM(CASE WHEN scrm_feedback_sessions_cstm.delivery_rating_c = 3 THEN 1 else 0 END) as good,
+                    SUM(CASE WHEN scrm_feedback_sessions_cstm.delivery_rating_c = 4 THEN 1 else 0 END) as very_good,
+                    SUM(CASE WHEN scrm_feedback_sessions_cstm.delivery_rating_c = 5 THEN 1 else 0 END) as excellent,
+                    SUM(CASE WHEN scrm_feedback_sessions_cstm.relevance_c = 'High' THEN 1 else 0 END) as High,
+                    SUM(CASE WHEN scrm_feedback_sessions_cstm.relevance_c = 'Med' THEN 1 else 0 END) as Med,
+                    SUM(CASE WHEN scrm_feedback_sessions_cstm.relevance_c = 'Low' THEN 1 else 0 END) as Low,
+                    SUM(CASE WHEN scrm_feedback_sessions_cstm.relevance_c = 'VeryLow' THEN 1 else 0 END) as vlow,          
+                    scrm_session_information.name as session_name
+                FROM project 
+                INNER JOIN project_scrm_timetable_1_c ON project_scrm_timetable_1_c.project_scrm_timetable_1project_ida = project.id
+                INNER JOIN project_cstm ON project_cstm.id_c = project.id
+                INNER JOIN scrm_timetable_scrm_session_information_1_c ON scrm_timetable_scrm_session_information_1_c.scrm_timetable_scrm_session_information_1scrm_timetable_ida = project_scrm_timetable_1_c.project_scrm_timetable_1scrm_timetable_idb
+                INNER JOIN scrm_feedback_sessions_cstm ON scrm_feedback_sessions_cstm.session_c = scrm_timetable_scrm_session_information_1_c.scrm_timetc7f4rmation_idb
+                INNER JOIN scrm_session_information ON scrm_session_information.id = scrm_feedback_sessions_cstm.session_c
+                WHERE project.deleted = '0'
+                AND scrm_timetable_scrm_session_information_1_c.deleted = '0'
+                AND project_scrm_timetable_1_c.deleted = '0'
+                AND project.id = '$id'
+                GROUP BY project.id, scrm_session_information.id
+        ";
+
+        $queryObjective = "
+                SELECT 
+                    SUM(CASE WHEN scrm_feedback_objective_cstm.rating_c = 1 THEN 1 else 0 END) as Minimal,
+                    SUM(CASE WHEN scrm_feedback_objective_cstm.rating_c = 2 THEN 1 else 0 END) as Partial,
+                    SUM(CASE WHEN scrm_feedback_objective_cstm.rating_c = 3 THEN 1 else 0 END) as Complete,
+                    scrm_feedback_objective_cstm.objective_c,
+                    scrm_programme_objective.name
+                FROM project
+                INNER JOIN project_scrm_feedback_1_c ON project_scrm_feedback_1_c.project_scrm_feedback_1project_ida = project.id
+                INNER JOIN scrm_feedback_scrm_feedback_objective_1_c ON scrm_feedback_scrm_feedback_objective_1_c.scrm_feedback_scrm_feedback_objective_1scrm_feedback_ida = project_scrm_feedback_1_c.project_scrm_feedback_1scrm_feedback_idb
+                INNER JOIN scrm_feedback_objective_cstm ON scrm_feedback_objective_cstm.id_c = scrm_feedback_scrm_feedback_objective_1_c.scrm_feedb10e5jective_idb
+                INNER JOIN scrm_programme_objective ON scrm_feedback_objective_cstm.objective_c = scrm_programme_objective.id
+                WHERE project.id = '$id'
+                GROUP BY scrm_feedback_objective_cstm.objective_c 
+        ";
+
+        $queryProgramme = "
+                SELECT
+                    SUM(CASE WHEN scrm_feedback_cstm.overall_rating_c = 1 THEN 1 else 0 END) as o1,
+                    SUM(CASE WHEN scrm_feedback_cstm.overall_rating_c = 2 THEN 1 else 0 END) as o2,
+                    SUM(CASE WHEN scrm_feedback_cstm.overall_rating_c = 3 THEN 1 else 0 END) as o3,
+                    SUM(CASE WHEN scrm_feedback_cstm.overall_rating_c = 4 THEN 1 else 0 END) as o4,
+                    SUM(CASE WHEN scrm_feedback_cstm.overall_rating_c = 5 THEN 1 else 0 END) as o5,
+                    project_cstm.start_date_c,
+                    project_cstm.end_date_c,
+                    project.name,
+                    GROUP_CONCAT(scrm_feedback_cstm.topics_include_c) as topics_include_c,
+                    GROUP_CONCAT(scrm_feedback_cstm.topics_not_relevant_c) as topics_not_relevant_c,
+                    GROUP_CONCAT(scrm_feedback_cstm.learning_outcomes_c) as learning_outcomes_c,
+                    GROUP_CONCAT(scrm_feedback_cstm.attend_asci_programmes_c) as attend_asci_programmes_c,
+                    GROUP_CONCAT(scrm_feedback_cstm.offer_other_programms_c) as offer_other_programms_c
+                FROM project 
+                INNER JOIN project_cstm ON project_cstm.id_c = project.id
+                LEFT JOIN project_scrm_feedback_1_c ON project_scrm_feedback_1_c.project_scrm_feedback_1project_ida = project.id
+                LEFT JOIN scrm_feedback_cstm ON scrm_feedback_cstm.id_c = project_scrm_feedback_1_c.project_scrm_feedback_1scrm_feedback_idb
+                WHERE project.deleted = '0'
+                AND project.id = '$id'
+                GROUP BY project.id
+        ";        
+
+        $feedbackSessions = $db->query($query);
+        $feebackObjectives = $db->query($queryObjective);
+        $feedback = $db->fetchByAssoc($db->query($queryProgramme));
+
+        include 'feedbackDoc.php';
+    }
+
+    public function action_pdReport(){
+        
+        $projectBean = BeanFactory::getBean('Project',$_REQUEST['id']);
+        // print_r($projectBean->project_scrm_timetable_1scrm_timetable_idb);exit();
+        $participantsBean = $projectBean->get_linked_beans('project_contacts_2', 'Contacts', array(), 0, -1, 0, "nomination_status_c='Accepted'");
+        include 'pdReportDoc.php';
+    }
+}
+
+?> 
